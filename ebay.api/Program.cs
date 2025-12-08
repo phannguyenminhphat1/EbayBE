@@ -28,7 +28,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("allow_origin", policy =>
     {
-        policy.WithOrigins("https://localhost:3000", "*")
+        policy.WithOrigins("http://localhost:3001")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
@@ -98,7 +98,6 @@ builder.Services.AddAutoMapper(typeof(MapperToolInfras).Assembly);
 
 // Repository
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
@@ -119,7 +118,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 var app = builder.Build();
 
 // CORS
-app.UseCors();
+app.UseCors("allow_origin");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
