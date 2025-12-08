@@ -2,16 +2,13 @@ using ebay.domain.Entities;
 
 public class UserRoleEntity
 {
-    public int UserId { get; set; }
-    public int RoleId { get; set; }
-    public string? Description { get; set; }
-    // public  Role Role { get; set; } = null!;
-    public UserEntity User { get; } = null!;
-    private UserRoleEntity() { }
+    public int RoleId { get; private set; }
+    public string? Description { get; private set; }
 
-    public UserRoleEntity(int userId, int roleId)
+    public string? RoleName { get; private set; }
+
+    public UserRoleEntity(int roleId)
     {
-        UserId = userId;
         RoleId = roleId;
     }
 }

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using AutoMapper;
 using ebay.domain.Entities;
 using ebay.domain.Interfaces;
@@ -12,7 +13,7 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
     #region FIND USER BY ID
     public async Task<UserEntity?> FindUserById(int id)
     {
-        var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == id);
+        var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).SingleOrDefaultAsync(u => u.Id == id);
         if (user == null) return null;
         var userMapper = _mapper.Map<UserEntity>(user);
         return userMapper;
@@ -25,6 +26,7 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
         var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).SingleOrDefaultAsync(u => u.Email == email);
         if (user == null) return null;
         var userMapper = _mapper.Map<UserEntity>(user);
+        System.Console.WriteLine(JsonSerializer.Serialize(userMapper));
         return userMapper;
     }
     #endregion
@@ -49,7 +51,8 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
             CreatedAt = userEntity.CreatedAt,
             Deleted = userEntity.Deleted
         };
-        foreach (var role in userEntity.UserRoleEntity)
+
+        foreach (var role in userEntity.UserRoles)
         {
             user.UserRoles.Add(new UserRole
             {

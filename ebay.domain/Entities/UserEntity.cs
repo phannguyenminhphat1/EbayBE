@@ -2,31 +2,27 @@ namespace ebay.domain.Entities;
 
 public class UserEntity
 {
-    public int Id { get; set; }
+    public int Id { get; private set; }
 
-    public string Username { get; set; } = null!;
+    public string Username { get; private set; } = null!;
 
-    public string Email { get; set; } = null!;
+    public string Email { get; private set; } = null!;
 
-    public string PasswordHash { get; set; } = null!;
+    public string PasswordHash { get; private set; } = null!;
 
-    public string? FullName { get; set; }
+    public string? FullName { get; private set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; private set; }
 
-    public bool? Deleted { get; set; }
+    public bool? Deleted { get; private set; }
 
-    public string? Address { get; set; }
+    public string? Address { get; private set; }
 
-    public string? Phone { get; set; }
+    public string? Phone { get; private set; }
 
-    private readonly List<UserRoleEntity> _UserRoles = new();
-    public IReadOnlyCollection<UserRoleEntity> UserRoleEntity => _UserRoles;
+    private readonly List<UserRoleEntity> _userRoles = new();
+    public IReadOnlyCollection<UserRoleEntity> UserRoles => _userRoles;
 
-    private readonly List<RefreshTokenEntity> _RefreshTokens = new();
-    public IReadOnlyCollection<RefreshTokenEntity> RefreshTokens => _RefreshTokens;
-
-    private UserEntity() { }
     public UserEntity(string username, string passwordHash, string fullName, string email, DateTime createdAt, bool? deleted)
     {
         Username = username;
@@ -36,10 +32,11 @@ public class UserEntity
         CreatedAt = createdAt;
         Deleted = deleted;
     }
-
-    public void AddRole(UserRoleEntity role)
+    public void AddRole(int roleId)
     {
-        _UserRoles.Add(role);
-    }
+        if (_userRoles.Any(r => r.RoleId == roleId))
+            throw new Exception("Role duplicated!");
 
+        _userRoles.Add(new UserRoleEntity(roleId));
+    }
 }

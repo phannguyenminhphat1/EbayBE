@@ -9,5 +9,5 @@ public class LoginDto
 
     [JsonPropertyName("password")]
     [Required(ErrorMessage = UserMessages.PASSWORD_IS_REQUIRED)]
-    public string PasswordHash { get; set; } = null!;
+    public string Password { get; set; } = null!;
 }

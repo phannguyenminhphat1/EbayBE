@@ -2,6 +2,10 @@ public static class UserMessages
 {
     public const string ERROR = "Lỗi";
     public const string PASSWORD_IS_REQUIRED = "Password is required";
+    public const string CONFIRM_PASSWORD_IS_REQUIRED = "Confirm password is required";
+    public const string CONFIRM_PASSWORD_DOES_NOT_MATCH_PASSWORD = "Confirm password does not match password";
+
+
     public const string PASSWORD_IS_NOT_CORRECT = "Password is not correct";
     public const string LOGIN_SUCCESSFULLY = "Login successfully";
     public const string LOGOUT_SUCCESSFULLY = "Logout successfully";

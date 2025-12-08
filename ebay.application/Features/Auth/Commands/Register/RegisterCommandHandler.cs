@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Json;
 using ebay.application.Features.Auth.Commands.Register;
 using ebay.domain.Entities;
 using ebay.domain.Interfaces;
@@ -29,25 +30,26 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ResponseS
                 }
             );
         }
+        if (request.Dto.ConfirmPassword != request.Dto.Password)
+        {
+            return new ResponseService<object>(
+                statusCode: (int)HttpStatusCode.UnprocessableEntity,
+                message: CommonMessages.ERROR,
+                data: new
+                {
+                    confirm_password = UserMessages.CONFIRM_PASSWORD_DOES_NOT_MATCH_PASSWORD
+                }
+            );
+        }
         var hashPassword = _userRepository.HashPassword(request.Dto.Password);
         var userEntity = new UserEntity(request.Dto.Username, hashPassword, request.Dto.FullName, request.Dto.Email, DateTime.Now, false);
-        var userRole = new UserRoleEntity(userEntity.Id, (int)UserRoleEnum.Buyer);
-        userEntity.AddRole(userRole);
-
+        userEntity.AddRole((int)UserRoleEnum.Buyer);
         await _userRepository.AddUser(userEntity);
         await _unitOfWork.SaveChangesAsync();
         return new ResponseService<object>(
             statusCode: (int)HttpStatusCode.OK,
             message: UserMessages.REGISTER_SUCCESSFULLY
         );
-
-
     }
 }
 
-// {
-//   "username": "phannguyenminhphat2",
-//   "email": "phannguyenminhphat2@gmail.com",
-//   "password": "MinhPhat@1234",
-//   "full_name": "Nguyễn Minh Phát"
-// }

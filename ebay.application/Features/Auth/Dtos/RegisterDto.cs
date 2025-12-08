@@ -17,7 +17,11 @@ public class RegisterDto
     [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?""{}|<>]).+$", ErrorMessage = UserMessages.PASSWORD_IS_INVALID)]
     public string Password { get; set; } = null!;
 
-    [JsonPropertyName("full_name")]
+    [JsonPropertyName("confirm_password")]
+    [Required(ErrorMessage = UserMessages.PASSWORD_IS_REQUIRED)]
+    public string ConfirmPassword { get; set; } = null!;
+
+    [JsonPropertyName("fullname")]
     [Required(ErrorMessage = UserMessages.FULLNAME_IS_REQUIRED)]
     public string FullName { get; set; } = null!;
 }
