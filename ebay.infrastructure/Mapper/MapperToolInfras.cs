@@ -9,6 +9,9 @@ public class MapperToolInfras : Profile
     public MapperToolInfras()
     {
         CreateMap<Product, ProductEntity>().ReverseMap();
+        CreateMap<ProductListCategory, ProductListCategoryEntity>().ReverseMap();
+        CreateMap<Category, CategoryEntity>().ReverseMap();
+        CreateMap<RefreshToken, RefreshTokenEntity>().ReverseMap();
         CreateMap<User, UserEntity>();
         CreateMap<UserRole, UserRoleEntity>()
             .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.RoleName))

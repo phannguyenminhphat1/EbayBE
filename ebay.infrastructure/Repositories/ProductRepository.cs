@@ -1,25 +1,20 @@
+using AutoMapper;
 using ebay.domain.Entities;
 using ebay.infrastructure.Data;
 using ebay.infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository(EBayDbContext _context, IMapper _mapper) : IProductRepository
 {
-    protected readonly EBayDbContext _context;
-    protected readonly DbSet<Product> _dbSet;
+    public async Task<(IEnumerable<ProductEntity> ListProducts, int TotalRecords)> GetAllProducts(int page, int? pageSize = 10, string? keyword = null, int? category = null)
+    {
+        var query = _context.Products.Include(p => p.ProductImages).AsQueryable();
 
-    public ProductRepository(EBayDbContext context)
-    {
-        _context = context;
-        _dbSet = _context.Set<Product>();
+        throw new NotImplementedException();
     }
-    public async Task<IEnumerable<ProductEntity>> GetAllProducts()
+
+    public Task<(IEnumerable<ProductEntity> ListProducts, int TotalRecords)> GetAllProducts()
     {
-        return await _dbSet.Select(p => new ProductEntity(
-                p.Name!,
-                p.Price!.Value,
-                p.Stock!.Value
-            ))
-            .ToListAsync();
+        throw new NotImplementedException();
     }
 }

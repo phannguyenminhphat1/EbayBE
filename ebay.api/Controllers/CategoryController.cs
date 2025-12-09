@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -5,13 +9,12 @@ namespace ebay.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController(ISender _sender) : ControllerBase
+    public class CategoryController(ISender _sender) : ControllerBase
     {
-        [HttpGet("get-products")]
-        [PaginationFilter]
-        public async Task<IActionResult> GetAllProducts([FromQuery] PaginationDto paginationDto)
+        [HttpGet("get-categories")]
+        public async Task<IActionResult> GetCategories()
         {
-            var query = new GetProductListCategoryQuery(paginationDto);
+            var query = new GetCategoriesQuery();
             var result = await _sender.Send(query);
             return result.StatusCode switch
             {

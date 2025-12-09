@@ -2,5 +2,5 @@ using ebay.domain.Entities;
 
 public interface IProductRepository
 {
-    Task<IEnumerable<ProductEntity>> GetAllProducts();
+    Task<(IEnumerable<ProductEntity> ListProducts, int TotalRecords)> GetAllProducts();
 }

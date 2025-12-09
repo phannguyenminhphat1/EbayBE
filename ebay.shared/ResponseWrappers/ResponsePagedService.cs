@@ -5,6 +5,18 @@ public class ResponsePagedService<T>
     [JsonPropertyName("data")]
     public T Data { get; set; } = default!;
 
+    [JsonPropertyName("pagination")]
+    public Pagination Pagination { get; set; } = default!;
+
+    public ResponsePagedService(T data, Pagination pagination)
+    {
+        Data = data;
+        Pagination = pagination;
+    }
+}
+
+public class Pagination
+{
     [JsonPropertyName("current_page")]
     public int CurrentPage { get; set; }
 
@@ -16,14 +28,11 @@ public class ResponsePagedService<T>
 
     [JsonPropertyName("total_item")]
     public int TotalItem { get; set; }
-
-    public ResponsePagedService(T data, int currentPage, int pageSize, int totalPage, int totalItem)
+    public Pagination(int currentPage, int pageSize, int totalItem, int totalPage)
     {
-        Data = data;
         CurrentPage = currentPage;
         PageSize = pageSize;
         TotalPage = totalPage;
         TotalItem = totalItem;
-
     }
 }

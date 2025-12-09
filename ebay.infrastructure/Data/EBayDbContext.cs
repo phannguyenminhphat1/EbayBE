@@ -105,6 +105,7 @@ public partial class EBayDbContext : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.Deleted).HasDefaultValue(false);
             entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.Image).IsUnicode(false);
             entity.Property(e => e.Name).HasMaxLength(100);
         });
 
@@ -426,6 +427,7 @@ public partial class EBayDbContext : DbContext
 
             entity.Property(e => e.Category).HasMaxLength(100);
             entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.ProductImage).HasMaxLength(255);
             entity.Property(e => e.ProductName).HasMaxLength(100);
         });
 
