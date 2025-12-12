@@ -17,4 +17,5 @@ public class ProductListCategoryRepository(IMapper _mapper, EBayDbContext _conte
         return (lstProductCategoryMapper, totalRecord);
 
     }
+
 }

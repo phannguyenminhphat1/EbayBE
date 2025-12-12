@@ -10,6 +10,7 @@ public class MapperToolInfras : Profile
     {
         CreateMap<Product, ProductEntity>().ReverseMap();
         CreateMap<ProductListCategory, ProductListCategoryEntity>().ReverseMap();
+        CreateMap<ListingProductDetail, ListingProductDetailEntity>().ReverseMap();
         CreateMap<Category, CategoryEntity>().ReverseMap();
         CreateMap<RefreshToken, RefreshTokenEntity>().ReverseMap();
         CreateMap<User, UserEntity>();

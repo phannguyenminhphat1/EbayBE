@@ -34,6 +34,8 @@ public partial class EBayDbContext : DbContext
 
     public virtual DbSet<Listing> Listings { get; set; }
 
+    public virtual DbSet<ListingProductDetail> ListingProductDetails { get; set; }
+
     public virtual DbSet<LoginLog> LoginLogs { get; set; }
 
     public virtual DbSet<NhanVien> NhanViens { get; set; }
@@ -243,6 +245,25 @@ public partial class EBayDbContext : DbContext
                 .HasConstraintName("FK__Listings__Seller__6477ECF3");
         });
 
+        modelBuilder.Entity<ListingProductDetail>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("ListingProductDetail");
+
+            entity.Property(e => e.Address).HasMaxLength(255);
+            entity.Property(e => e.Avatar).HasMaxLength(128);
+            entity.Property(e => e.CategoryName).HasMaxLength(100);
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+            entity.Property(e => e.CurrentPrice).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.FullName).HasMaxLength(100);
+            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Phone).HasMaxLength(255);
+            entity.Property(e => e.StartingPrice).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Status).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<LoginLog>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__LoginLog__3214EC07413249BC");
@@ -426,6 +447,7 @@ public partial class EBayDbContext : DbContext
                 .ToView("ProductListCategory");
 
             entity.Property(e => e.Category).HasMaxLength(100);
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.ProductImage).HasMaxLength(255);
             entity.Property(e => e.ProductName).HasMaxLength(100);

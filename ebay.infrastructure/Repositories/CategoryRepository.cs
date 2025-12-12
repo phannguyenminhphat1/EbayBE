@@ -12,4 +12,11 @@ public class CategoryRepository(EBayDbContext _context, IMapper _mapper) : ICate
         return lstCategoriesMapper;
 
     }
+
+    public async Task<CategoryEntity?> GetCategoryById(int id)
+    {
+        var category = await _context.Categories.SingleOrDefaultAsync(c => c.Id == id);
+        var categoryMapper = _mapper.Map<CategoryEntity>(category);
+        return categoryMapper;
+    }
 }

@@ -9,6 +9,8 @@ public partial class ProductListCategory
 
     public string? ProductName { get; set; }
 
+    public DateTime? CreatedAt { get; set; }
+
     public int CategoryId { get; set; }
 
     public string Category { get; set; } = null!;
@@ -16,4 +18,8 @@ public partial class ProductListCategory
     public decimal? Price { get; set; }
 
     public string? ProductImage { get; set; }
+
+    public int TotalSold { get; set; }
+
+    public int AverageRatingScore { get; set; }
 }

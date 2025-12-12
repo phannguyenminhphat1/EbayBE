@@ -1,5 +1,6 @@
 using System.Net;
 using AutoMapper;
+using ebay.application.Features.Products;
 using MediatR;
 
 public class GetProductListCategoryQueryHandler : IRequestHandler<GetProductListCategoryQuery, ResponseService<ResponsePagedService<List<ProductListCategoryDto>>>>
@@ -28,6 +29,5 @@ public class GetProductListCategoryQueryHandler : IRequestHandler<GetProductList
             message: ProductMessages.GET_PRODUCTS_SUCCESSFULLY,
             data: resultResponse
         );
-        throw new NotImplementedException();
     }
 }

@@ -8,6 +8,8 @@ public class MapperTool : Profile
     public MapperTool()
     {
         CreateMap<ProductListCategoryEntity, ProductListCategoryDto>().ReverseMap();
+        CreateMap<ListingProductDetailEntity, GetListingProductDetailDto>().ReverseMap();
+        CreateMap<ProductListCategoryEntity, ProductsByCategoryIdDto>().ReverseMap();
         CreateMap<UserRoleEntity, UserRoleDto>().ReverseMap();
         CreateMap<UserEntity, UserDto>();
         CreateMap<CategoryEntity, CategoryDto>();
