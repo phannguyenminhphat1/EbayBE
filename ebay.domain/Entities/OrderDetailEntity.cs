@@ -24,4 +24,9 @@ public class OrderDetailEntity
     {
         Deleted = true;
     }
+
+    public void IncreaseQuantity(int quantity)
+    {
+        Quantity += quantity;
+    }
 }

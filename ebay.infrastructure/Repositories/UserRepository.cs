@@ -26,7 +26,6 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
         var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).SingleOrDefaultAsync(u => u.Email == email);
         if (user == null) return null;
         var userMapper = _mapper.Map<UserEntity>(user);
-        System.Console.WriteLine(JsonSerializer.Serialize(userMapper));
         return userMapper;
     }
     #endregion

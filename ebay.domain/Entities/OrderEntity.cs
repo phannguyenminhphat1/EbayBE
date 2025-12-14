@@ -12,21 +12,29 @@ public class OrderEntity
     private readonly List<OrderDetailEntity> _orderDetails = new();
     public IReadOnlyCollection<OrderDetailEntity> OrderDetails => _orderDetails;
 
-    public OrderEntity(int buyerId)
+    public OrderEntity(int buyerId, string status)
     {
         BuyerId = buyerId;
         CreatedAt = DateTime.Now;
-        Status = "Pending";
+        Status = status;
         Deleted = false;
         TotalAmount = 0;
     }
 
-    public void AddOrderDetail(int productId, int quantity, decimal unitPrice)
+    public void AddOrUpdateItem(int productId, int quantity, decimal unitPrice)
     {
-        var detail = new OrderDetailEntity(productId, quantity, unitPrice);
-        _orderDetails.Add(detail);
+        var detail = _orderDetails.SingleOrDefault(x => x.ProductId == productId && x.Deleted == false);
 
-        TotalAmount += quantity * unitPrice;
+        if (detail == null)
+        {
+            _orderDetails.Add(new OrderDetailEntity(productId, quantity, unitPrice));
+        }
+        else
+        {
+            detail.IncreaseQuantity(quantity);
+        }
+
+        RecalculateTotal();
     }
 
     public void ChangeStatus(string status)
@@ -37,5 +45,10 @@ public class OrderEntity
     public void SoftDelete()
     {
         Deleted = true;
+    }
+
+    public void RecalculateTotal()
+    {
+        TotalAmount = _orderDetails.Where(x => x.Deleted == false).Sum(x => x.GetTotal());
     }
 }

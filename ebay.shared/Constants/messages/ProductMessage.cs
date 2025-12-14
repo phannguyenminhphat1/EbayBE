@@ -6,6 +6,11 @@ public static class ProductMessages
 
     public const string PRODUCT_NOT_FOUND = "Product not found";
 
+    public const string PRODUCT_ID_MUST_BE_A_NUMBER = "Product id must be a number";
+    public const string PRODUCT_ID_IS_REQUIRED = "Product id is required";
+
+
+
     public const string PRICE_MIN_MUST_BE_A_VALID_NUMBER = "Price min must be a valid number";
     public const string PRICE_MAX_MUST_BE_A_VALID_NUMBER = "Price max must be a valid number";
     public const string PRICE_MAX_CANNOT_BE_LESS_THAN_PRICE_MIN = "Price max cannot be less than price min";

@@ -98,6 +98,8 @@ builder.Services.AddAutoMapper(typeof(MapperToolInfras).Assembly);
 
 // Repository
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductListCategoryRepository, ProductListCategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IListingProductDetailRepository, ListingProductDetailRepository>();

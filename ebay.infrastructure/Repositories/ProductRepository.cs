@@ -4,17 +4,19 @@ using ebay.infrastructure.Data;
 using ebay.infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 
-public class ProductRepository(EBayDbContext _context, IMapper _mapper) : IProductRepository
+public class ProductRepository : IProductRepository
 {
-    public async Task<(IEnumerable<ProductEntity> ListProducts, int TotalRecords)> GetAllProducts(int page, int? pageSize = 10, string? keyword = null, int? category = null)
-    {
-        var query = _context.Products.Include(p => p.ProductImages).AsQueryable();
+    private readonly EBayDbContext _context;
+    private readonly IMapper _mapper;
 
-        throw new NotImplementedException();
+    public ProductRepository(EBayDbContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
     }
-
-    public Task<(IEnumerable<ProductEntity> ListProducts, int TotalRecords)> GetAllProducts()
+    public async Task<ProductEntity?> GetById(int id)
     {
-        throw new NotImplementedException();
+        var product = await _context.Products.SingleOrDefaultAsync(p => p.Id == id && p.Deleted == false);
+        return product == null ? null : _mapper.Map<ProductEntity>(product);
     }
 }
