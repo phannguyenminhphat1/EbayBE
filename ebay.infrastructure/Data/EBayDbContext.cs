@@ -30,6 +30,8 @@ public partial class EBayDbContext : DbContext
 
     public virtual DbSet<GetListingProductDetail> GetListingProductDetails { get; set; }
 
+    public virtual DbSet<GetOrdersListingDetail> GetOrdersListingDetails { get; set; }
+
     public virtual DbSet<Group> Groups { get; set; }
 
     public virtual DbSet<Listing> Listings { get; set; }
@@ -196,6 +198,22 @@ public partial class EBayDbContext : DbContext
             entity.Property(e => e.Phone).HasMaxLength(255);
             entity.Property(e => e.StartingPrice).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Status).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<GetOrdersListingDetail>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("GetOrdersListingDetail");
+
+            entity.Property(e => e.Address).HasMaxLength(255);
+            entity.Property(e => e.Avatar).HasMaxLength(128);
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.FullName).HasMaxLength(100);
+            entity.Property(e => e.OrderCreatedAt).HasColumnType("datetime");
+            entity.Property(e => e.OrderStatus).HasMaxLength(50);
+            entity.Property(e => e.Phone).HasMaxLength(255);
+            entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
         });
 
         modelBuilder.Entity<Group>(entity =>

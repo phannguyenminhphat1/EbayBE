@@ -1,6 +1,8 @@
 public static class OrderMessages
 {
     public const string QUANTITY_MUST_BE_A_NUMBER = "Quantity must be a number";
+    public const string GET_ORDERS_SUCCESSFULLY = "Get orders successfully";
+
     public const string QUANTITY_MUST_BE_POSITIVE = "Quantity must be positive";
     public const string QUANTITY_IS_REQUIRED = "Quantity is required";
 

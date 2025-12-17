@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using ebay.application;
+using ebay.application.Interfaces;
 using ebay.domain.Interfaces;
 using ebay.infrastructure.Data;
 using ebay.infrastructure.Repositories;
@@ -103,6 +104,8 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductListCategoryRepository, ProductListCategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IListingProductDetailRepository, ListingProductDetailRepository>();
+builder.Services.AddScoped<IOrdersListingDetailRepository, OrdersListingDetailRepository>();
+
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();

@@ -41,6 +41,8 @@ public class ListingProductDetailEntity
 
     public string? ListImageDetail { get; private set; }
 
+    public int? Stock { get; private set; }
+
     public int? GroupListing { get; private set; }
 
     public int? TotalSold { get; private set; }

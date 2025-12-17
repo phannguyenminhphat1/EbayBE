@@ -57,11 +57,15 @@ public class GetListingProductDetailDto
     [JsonPropertyName("list_image_detail")]
     public string? ListImageDetail { get; set; }
 
+    [JsonPropertyName("stock")]
+    public int? Stock { get; set; }
+
     [JsonPropertyName("group_listing")]
     public int? GroupListing { get; set; }
 
     [JsonPropertyName("total_sold")]
     public int? TotalSold { get; set; }
+
     [JsonPropertyName("average_rating_score")]
     public int? AverageRatingScore { get; set; }
 }

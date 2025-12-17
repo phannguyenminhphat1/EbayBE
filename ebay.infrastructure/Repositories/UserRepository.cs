@@ -13,7 +13,7 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
     #region FIND USER BY ID
     public async Task<UserEntity?> FindUserById(int id)
     {
-        var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).SingleOrDefaultAsync(u => u.Id == id);
+        var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).SingleOrDefaultAsync(u => u.Id == id && u.Deleted == false);
         if (user == null) return null;
         var userMapper = _mapper.Map<UserEntity>(user);
         return userMapper;
@@ -23,7 +23,7 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
     #region FIND USER BY EMAIL
     public async Task<UserEntity?> FindUserByEmail(string email)
     {
-        var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).SingleOrDefaultAsync(u => u.Email == email);
+        var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).SingleOrDefaultAsync(u => u.Email == email && u.Deleted == false);
         if (user == null) return null;
         var userMapper = _mapper.Map<UserEntity>(user);
         return userMapper;

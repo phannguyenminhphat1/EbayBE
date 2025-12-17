@@ -13,5 +13,6 @@ public class MapperTool : Profile
         CreateMap<UserRoleEntity, UserRoleDto>().ReverseMap();
         CreateMap<UserEntity, UserDto>();
         CreateMap<CategoryEntity, CategoryDto>();
+
     }
 }

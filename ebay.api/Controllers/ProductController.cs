@@ -40,7 +40,7 @@ namespace ebay.api.Controllers
             };
         }
 
-        [HttpGet("get-listing-products-detail/{id}")]
+        [HttpGet("get-listing-product-detail/{id}")]
         [ParseIdFilter]
         public async Task<IActionResult> GetListingProductDetail([FromRoute] string id)
         {
