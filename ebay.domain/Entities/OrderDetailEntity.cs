@@ -29,4 +29,12 @@ public class OrderDetailEntity
     {
         Quantity += quantity;
     }
+
+    public void SetQuantity(int quantity)
+    {
+        if (quantity <= 0)
+            throw new Exception("Quantity must be positive");
+
+        Quantity = quantity;
+    }
 }

@@ -51,4 +51,30 @@ public class OrderEntity
     {
         TotalAmount = _orderDetails.Where(x => x.Deleted == false).Sum(x => x.GetTotal());
     }
+
+    public void RemoveOrderDetails(List<int> orderDetailIds)
+    {
+        var detailsToRemove = _orderDetails.Where(x => orderDetailIds.Contains(x.Id) && x.Deleted == false).ToList();
+        if (detailsToRemove.Count == 0) return;
+        foreach (var detail in detailsToRemove)
+        {
+            detail.SoftDelete();
+        }
+        RecalculateTotal();
+    }
+
+    public void UpdateOrderDetailQuantity(int productId, int quantity)
+    {
+        var detail = _orderDetails.SingleOrDefault(x => x.ProductId == productId && x.Deleted == false);
+
+        if (detail == null) throw new Exception("Order detail not found");
+
+        if (quantity <= 0) throw new Exception("Quantity must be positive");
+
+        detail.SetQuantity(quantity);
+
+        RecalculateTotal();
+    }
+
+
 }

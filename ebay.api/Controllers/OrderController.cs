@@ -41,5 +41,39 @@ namespace ebay.api.Controllers
                 _ => Ok(result)
             };
         }
+
+        [HttpPost("delete-order-details")]
+        [Authorize]
+        [UserIdClaimFilter]
+        public async Task<IActionResult> DeleteOrderDetail([FromBody] DeleteOrderDetailDto dto)
+        {
+            var userId = HttpContext.Items["id"];
+            var command = new DeleteOrderDetailCommand((int)userId!, dto);
+            var result = await _sender.Send(command);
+            return result.StatusCode switch
+            {
+                400 => BadRequest(result),
+                404 => NotFound(result),
+                422 => UnprocessableEntity(result),
+                _ => Ok(result)
+            };
+        }
+
+        [HttpPut("update-order-detail")]
+        [Authorize]
+        [UserIdClaimFilter]
+        public async Task<IActionResult> DeleteOrderDetailById([FromBody] UpdateOrderDetailDto dto)
+        {
+            var userId = HttpContext.Items["id"];
+            var command = new UpdateOrderDetailCommand((int)userId!, dto);
+            var result = await _sender.Send(command);
+            return result.StatusCode switch
+            {
+                400 => BadRequest(result),
+                404 => NotFound(result),
+                422 => UnprocessableEntity(result),
+                _ => Ok(result)
+            };
+        }
     }
 }

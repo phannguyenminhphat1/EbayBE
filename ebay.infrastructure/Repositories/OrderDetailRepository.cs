@@ -31,4 +31,28 @@ public class OrderDetailRepository : IOrderDetailRepository
         var model = _mapper.Map<OrderDetail>(detail);
         await _context.OrderDetails.AddAsync(model);
     }
+
+    public async Task DeleteOrderDetails(List<OrderDetailEntity> entities)
+    {
+        if (entities == null || entities.Count == 0) return;
+        var ids = entities.Select(x => x.Id).ToList();
+        var orderDetails = await _context.OrderDetails.Where(x => ids.Contains(x.Id) && x.Deleted == false).ToListAsync();
+        if (orderDetails.Count == 0) return;
+        _context.OrderDetails.RemoveRange(orderDetails);
+    }
+
+    public async Task<OrderDetailEntity?> GetById(int id)
+    {
+        var orderDetail = await _context.OrderDetails.SingleOrDefaultAsync(x => x.Id == id && x.Deleted == false);
+        if (orderDetail == null) return null;
+        var orderDetailMapper = _mapper.Map<OrderDetailEntity>(orderDetail);
+        return orderDetailMapper;
+    }
+
+    public async Task<List<OrderDetailEntity>> GetByIds(List<int> ids)
+    {
+        if (ids == null || ids.Count == 0) return [];
+        var orderDetails = await _context.OrderDetails.Where(x => ids.Contains(x.Id) && x.Deleted == false).ToListAsync();
+        return _mapper.Map<List<OrderDetailEntity>>(orderDetails);
+    }
 }

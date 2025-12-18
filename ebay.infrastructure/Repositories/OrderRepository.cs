@@ -24,6 +24,13 @@ public class OrderRepository : IOrderRepository
         return orderMapper;
     }
 
+    public async Task<OrderEntity?> GetByOrderDetailIds(List<int> detailIds)
+    {
+        var order = await _context.Orders.Include(o => o.OrderDetails).Where(o => o.Deleted == false && o.OrderDetails.Count(d => detailIds.Contains(d.Id) && d.Deleted == false) == detailIds.Count).SingleOrDefaultAsync();
+
+        return order == null ? null : _mapper.Map<OrderEntity>(order);
+    }
+
     public async Task Add(OrderEntity orderEntity)
     {
         var order = new Order
@@ -58,9 +65,7 @@ public class OrderRepository : IOrderRepository
 
         foreach (var item in orderEntity.OrderDetails)
         {
-            var detail = order.OrderDetails.SingleOrDefault(x => x.ProductId == item.ProductId && x.Deleted == false);
-
-            if (detail == null)
+            if (item.Id == 0)
             {
                 order.OrderDetails.Add(new OrderDetail
                 {
@@ -72,7 +77,9 @@ public class OrderRepository : IOrderRepository
             }
             else
             {
+                var detail = order.OrderDetails.Single(d => d.Id == item.Id);
                 detail.Quantity = item.Quantity;
+                detail.Deleted = item.Deleted;
             }
         }
     }
