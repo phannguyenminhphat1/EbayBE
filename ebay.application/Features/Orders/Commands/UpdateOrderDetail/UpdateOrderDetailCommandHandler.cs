@@ -56,11 +56,11 @@ public class UpdateOrderDetailCommandHandler : IRequestHandler<UpdateOrderDetail
         catch (Exception ex)
         {
             return new ResponseService<object>(
-                statusCode: (int)HttpStatusCode.BadRequest,
+                statusCode: (int)HttpStatusCode.NotFound,
                 message: ex.Message
             );
         }
-        // await _orderRepo.Update(order);
+        await _orderRepo.Update(order);
         await _unitOfWork.SaveChangesAsync();
         return new ResponseService<object>(
             statusCode: (int)HttpStatusCode.OK,

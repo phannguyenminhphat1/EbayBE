@@ -67,7 +67,7 @@ public class OrderEntity
     {
         var detail = _orderDetails.SingleOrDefault(x => x.ProductId == productId && x.Deleted == false);
 
-        if (detail == null) throw new Exception("Order detail not found");
+        if (detail == null) throw new Exception("Order detail of product not found");
 
         if (quantity <= 0) throw new Exception("Quantity must be positive");
 
