@@ -21,13 +21,13 @@ public class OrderEntity
         TotalAmount = 0;
     }
 
-    public void AddOrUpdateItem(int productId, int quantity, decimal unitPrice)
+    public void AddOrUpdateItem(int listingId, int productId, int quantity, decimal unitPrice)
     {
-        var detail = _orderDetails.SingleOrDefault(x => x.ProductId == productId && x.Deleted == false);
+        var detail = _orderDetails.SingleOrDefault(x => x.ListingId == listingId && x.Deleted == false);
 
         if (detail == null)
         {
-            _orderDetails.Add(new OrderDetailEntity(productId, quantity, unitPrice));
+            _orderDetails.Add(new OrderDetailEntity(listingId, productId, quantity, unitPrice));
         }
         else
         {
@@ -63,11 +63,11 @@ public class OrderEntity
         RecalculateTotal();
     }
 
-    public void UpdateOrderDetailQuantity(int productId, int quantity)
+    public void UpdateOrderDetailQuantity(int listingId, int quantity)
     {
-        var detail = _orderDetails.SingleOrDefault(x => x.ProductId == productId && x.Deleted == false);
+        var detail = _orderDetails.SingleOrDefault(x => x.ListingId == listingId && x.Deleted == false);
 
-        if (detail == null) throw new Exception("Order detail of product not found");
+        if (detail == null) throw new Exception("Order detail of listing product not found");
 
         if (quantity <= 0) throw new Exception("Quantity must be positive");
 

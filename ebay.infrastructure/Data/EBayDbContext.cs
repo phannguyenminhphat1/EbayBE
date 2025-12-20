@@ -363,6 +363,10 @@ public partial class EBayDbContext : DbContext
             entity.Property(e => e.Deleted).HasDefaultValue(false);
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
 
+            entity.HasOne(d => d.Listing).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.ListingId)
+                .HasConstraintName("FK_OrderDetails_Listings");
+
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

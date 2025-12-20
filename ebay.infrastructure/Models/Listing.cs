@@ -35,6 +35,8 @@ public partial class Listing
 
     public virtual Category? Category { get; set; }
 
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
     public virtual Product? Product { get; set; }
 
     public virtual User Seller { get; set; } = null!;

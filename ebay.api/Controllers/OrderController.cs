@@ -62,7 +62,7 @@ namespace ebay.api.Controllers
         [HttpPut("update-order-detail")]
         [Authorize]
         [UserIdClaimFilter]
-        public async Task<IActionResult> DeleteOrderDetailById([FromBody] UpdateOrderDetailDto dto)
+        public async Task<IActionResult> UpdateOrderDetail([FromBody] UpdateOrderDetailDto dto)
         {
             var userId = HttpContext.Items["id"];
             var command = new UpdateOrderDetailCommand((int)userId!, dto);

@@ -5,6 +5,11 @@ public static class OrderMessages
     public const string ORDER_DETAIL_NOT_FOUND = "Order detail not found";
     public const string ORDER_NOT_FOUND = "Order not found";
 
+    public const string LISTING_ID_IS_REQUIRED = "Listing id is required";
+    public const string LISTING_NOT_FOUND = "Listing not found";
+
+
+
     public const string ORDER_STATUS_IS_NOT_IN_CART = "Order status is not in cart";
 
     public const string UPDATE_ORDER_SUCCESSFULLY = "Update order successfully";

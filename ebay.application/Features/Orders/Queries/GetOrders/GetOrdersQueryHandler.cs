@@ -58,17 +58,40 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, ResponseSer
             OrderDetails = string.IsNullOrEmpty(o.OrderDetails) ? [] : JsonSerializer.Deserialize<List<OrdersDetailListingDetailReadModel>>(o.OrderDetails)?.Select(od => new OrderDetailsDto
             {
                 OrderDetailId = od.OrderDetailId,
-                ProductId = od.ProductId,
                 Quantity = od.Quantity,
                 UnitPrice = od.UnitPrice,
-                ProductName = od.ProductName,
-                Description = od.Description,
-                Stock = od.Stock,
-                ProductImages = od.ProductImages.Select(pi => new ProductImageDto
+                CreatedAt = od.CreatedAt,
+                Listing = new ListingDto
                 {
-                    Id = pi.Id,
-                    ImageUrl = pi.ImageUrl
-                }).ToList()
+                    ListingTitle = od.ListingTitle,
+                    ListingStatus = od.ListingStatus,
+                    ListingCreatedAt = od.ListingCreatedAt,
+                },
+                Seller = new SellerDto
+                {
+                    SellerUserId = od.SellerUserId,
+                    SellerFullName = od.SellerFullName,
+                    SellerEmail = od.SellerEmail,
+                    SellerAvatar = od.SellerAvatar,
+                    SellerAddress = od.SellerAddress,
+                    SellerPhone = od.SellerPhone,
+                },
+                Product = new ProductDto
+                {
+                    ProductId = od.ProductId,
+                    ProductName = od.ProductName,
+                    Description = od.Description,
+                    Stock = od.Stock,
+                    ProductImages = od.ProductImages.Select(pi => new ProductImageDto
+                    {
+                        Id = pi.Id,
+                        ImageUrl = pi.ImageUrl
+                    }).ToList()
+                },
+
+
+
+
             }).ToList()
         }).ToList();
 

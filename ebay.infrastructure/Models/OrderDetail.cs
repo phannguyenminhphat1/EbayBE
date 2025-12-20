@@ -19,6 +19,10 @@ public partial class OrderDetail
 
     public bool? Deleted { get; set; }
 
+    public int? ListingId { get; set; }
+
+    public virtual Listing? Listing { get; set; }
+
     public virtual Order Order { get; set; } = null!;
 
     public virtual Product Product { get; set; } = null!;

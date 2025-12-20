@@ -47,10 +47,9 @@ public class OrderRepository : IOrderRepository
             {
                 Deleted = false,
                 ProductId = item.ProductId,
+                ListingId = item.ListingId,
                 Quantity = item.Quantity,
                 UnitPrice = item.UnitPrice,
-
-
             });
         }
         await _context.Orders.AddAsync(order);
@@ -69,6 +68,7 @@ public class OrderRepository : IOrderRepository
             {
                 order.OrderDetails.Add(new OrderDetail
                 {
+                    ListingId = item.ListingId,
                     ProductId = item.ProductId,
                     Quantity = item.Quantity,
                     UnitPrice = item.UnitPrice,

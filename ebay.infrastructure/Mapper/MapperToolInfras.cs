@@ -11,13 +11,13 @@ public class MapperToolInfras : Profile
     {
         CreateMap<Product, ProductEntity>().ReverseMap();
         CreateMap<GetOrdersListingDetail, OrdersListingDetailReadModel>().ReverseMap();
-
         CreateMap<ProductListCategory, ProductListCategoryEntity>().ReverseMap();
         CreateMap<ListingProductDetail, ListingProductDetailEntity>().ReverseMap();
         CreateMap<Category, CategoryEntity>().ReverseMap();
         CreateMap<OrderDetail, OrderDetailEntity>().ReverseMap();
         CreateMap<Order, OrderEntity>().ReverseMap();
         CreateMap<RefreshToken, RefreshTokenEntity>().ReverseMap();
+        CreateMap<Listing, ListingEntity>().ReverseMap();
         CreateMap<User, UserEntity>();
         CreateMap<UserRole, UserRoleEntity>()
             .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.RoleName))

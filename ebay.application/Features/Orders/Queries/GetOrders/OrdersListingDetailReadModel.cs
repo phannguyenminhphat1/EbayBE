@@ -14,6 +14,7 @@ public class OrdersListingDetailReadModel
 
     public DateTime? OrderCreatedAt { get; set; }
 
+    // ===== BUYER INFO =====
     public int UserId { get; set; }
 
     public string? FullName { get; set; }
@@ -25,6 +26,7 @@ public class OrdersListingDetailReadModel
     public string? Address { get; set; }
 
     public string Avatar { get; set; } = null!;
-    // JSON
-    public string? OrderDetails { get; set; } = null!;
+
+    // ===== RAW JSON từ VIEW =====
+    public string? OrderDetails { get; set; }
 }

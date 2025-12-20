@@ -3,14 +3,17 @@ namespace ebay.domain.Entities;
 public class OrderDetailEntity
 {
     public int Id { get; private set; }
+    public int ListingId { get; private set; }
+
     public int ProductId { get; private set; }
     public int Quantity { get; private set; }
     public decimal UnitPrice { get; private set; }
     public DateTime? CreatedAt { get; private set; }
     public bool? Deleted { get; private set; }
 
-    public OrderDetailEntity(int productId, int quantity, decimal unitPrice)
+    public OrderDetailEntity(int listingId, int productId, int quantity, decimal unitPrice)
     {
+        ListingId = listingId;
         ProductId = productId;
         Quantity = quantity;
         UnitPrice = unitPrice;
