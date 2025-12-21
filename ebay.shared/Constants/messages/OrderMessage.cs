@@ -5,6 +5,9 @@ public static class OrderMessages
     public const string ORDER_DETAIL_NOT_FOUND = "Order detail not found";
     public const string ORDER_NOT_FOUND = "Order not found";
 
+    public const string BUY_SUCCESSFULLY_AND_WAITING_CONFIRMATION = "Buy products successfully, waiting for owner confirmation";
+
+
     public const string LISTING_ID_IS_REQUIRED = "Listing id is required";
     public const string LISTING_NOT_FOUND = "Listing not found";
 

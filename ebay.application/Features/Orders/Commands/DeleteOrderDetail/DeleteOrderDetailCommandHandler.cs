@@ -33,14 +33,10 @@ public class DeleteOrderDetailCommandHandler : IRequestHandler<DeleteOrderDetail
 
             return new ResponseService<object>(
                 statusCode: (int)HttpStatusCode.NotFound,
-                message: OrderMessages.ORDER_DETAIL_NOT_FOUND,
-                data: new
-                {
-                    missing_order_detail_ids = missingIds
-                }
+                message: @$"{OrderMessages.ORDER_DETAIL_NOT_FOUND} - Order details: {missingIds}"
             );
         }
-        var order = await _orderRepo.GetByOrderDetailIds(request.Dto.Ids);
+        var order = await _orderRepo.GetByOrderDetailIds(request.Dto.Ids, userId);
 
         if (order == null)
         {
@@ -49,21 +45,7 @@ public class DeleteOrderDetailCommandHandler : IRequestHandler<DeleteOrderDetail
                 message: OrderMessages.ORDER_NOT_FOUND
             );
         }
-        else if (order.Status != OrderStatusEnum.InCart.ToString())
-        {
-            return new ResponseService<object>(
-                statusCode: (int)HttpStatusCode.BadRequest,
-                message: OrderMessages.ORDER_STATUS_IS_NOT_IN_CART
-            );
-        }
 
-        if (order.BuyerId != userId)
-        {
-            return new ResponseService<object>(
-                statusCode: (int)HttpStatusCode.NotFound,
-                message: OrderMessages.NOT_YOURS_ORDER
-            );
-        }
         order.RemoveOrderDetails(request.Dto.Ids);
         await _orderRepo.Update(order);
         await _unitOfWork.SaveChangesAsync();

@@ -75,5 +75,23 @@ namespace ebay.api.Controllers
                 _ => Ok(result)
             };
         }
+
+
+        [HttpPost("buy-products")]
+        [Authorize]
+        [UserIdClaimFilter]
+        public async Task<IActionResult> BuyProducts([FromBody] BuyProductsDto dto)
+        {
+            var userId = HttpContext.Items["id"];
+            var command = new BuyProductsCommand((int)userId!, dto);
+            var result = await _sender.Send(command);
+            return result.StatusCode switch
+            {
+                400 => BadRequest(result),
+                404 => NotFound(result),
+                422 => UnprocessableEntity(result),
+                _ => Ok(result)
+            };
+        }
     }
 }
