@@ -63,9 +63,9 @@ public class OrderEntity
         RecalculateTotal();
     }
 
-    public void UpdateOrderDetailQuantity(int listingId, int quantity)
+    public void UpdateOrderDetailQuantity(int orderDetailId, int quantity)
     {
-        var detail = _orderDetails.SingleOrDefault(x => x.ListingId == listingId && x.Deleted == false);
+        var detail = _orderDetails.SingleOrDefault(x => x.Id == orderDetailId && x.Deleted == false);
 
         if (detail == null) throw new Exception("Order detail of listing product not found");
 

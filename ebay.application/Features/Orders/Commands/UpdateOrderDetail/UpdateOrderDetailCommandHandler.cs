@@ -17,7 +17,7 @@ public class UpdateOrderDetailCommandHandler : IRequestHandler<UpdateOrderDetail
     public async Task<ResponseService<object>> Handle(UpdateOrderDetailCommand request, CancellationToken cancellationToken)
     {
         var userId = _currentUser.UserId;
-        var listingId = request.Dto.ListingId!.Value;
+        var orderDetailId = request.Dto.Id!.Value;
         if (!int.TryParse(request.Dto.Quantity, out int quantity))
         {
             return new ResponseService<object>(
@@ -51,7 +51,7 @@ public class UpdateOrderDetailCommandHandler : IRequestHandler<UpdateOrderDetail
         }
         try
         {
-            order.UpdateOrderDetailQuantity(listingId, quantity);
+            order.UpdateOrderDetailQuantity(orderDetailId, quantity);
         }
         catch (Exception ex)
         {

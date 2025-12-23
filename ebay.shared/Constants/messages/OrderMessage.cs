@@ -26,6 +26,8 @@ public static class OrderMessages
 
 
     public const string ORDER_DETAIL_IDS_ARE_REQUIRED = "Order detail ids are required";
+    public const string ORDER_DETAIL_ID_IS_REQUIRED = "Order detail id is required";
+
 
     public const string DELETE_ORDER_DETAILS_SUCCESSFULLY = "Delete order details successfully";
 
