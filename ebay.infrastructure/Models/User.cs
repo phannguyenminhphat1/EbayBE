@@ -23,6 +23,8 @@ public partial class User
 
     public string? Phone { get; set; }
 
+    public string? Ava { get; set; }
+
     public virtual ICollection<Bid> Bids { get; set; } = new List<Bid>();
 
     public virtual ICollection<Listing> Listings { get; set; } = new List<Listing>();

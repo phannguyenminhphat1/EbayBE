@@ -6,6 +6,8 @@ public interface IUserRepository
 {
     Task<UserEntity?> FindUserByEmail(string email);
 
+    Task UpdateMe(UserEntity user);
+
     string HashPassword(string password);
 
     bool ValidateHashPassword(string password, string passwordHash);

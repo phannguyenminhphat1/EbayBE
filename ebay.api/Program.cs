@@ -110,11 +110,9 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // builder.Services.AddScoped<IAuthorizationHandler, ActiveUserHandler>();
 
-// Service
-// builder.Services.AddScoped<IProductRepository, ProductService>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddHttpContextAccessor();
 // Config default response

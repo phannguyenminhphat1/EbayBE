@@ -603,6 +603,7 @@ public partial class EBayDbContext : DbContext
             entity.HasIndex(e => e.Email, "UQ__Users__A9D105347DE540EE").IsUnique();
 
             entity.Property(e => e.Address).HasMaxLength(255);
+            entity.Property(e => e.Ava).IsUnicode(false);
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");

@@ -73,7 +73,7 @@ public class UploadHandler
         {
             errorResponse = new ResponseService<T>(
                 statusCode: (int)HttpStatusCode.InternalServerError,
-                 message: "Upload thất bại: " + ex.Message
+                message: "Upload thất bại: " + ex.Message
             );
             return false;
             throw;

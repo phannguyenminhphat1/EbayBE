@@ -20,6 +20,9 @@ public class UserEntity
 
     public string? Phone { get; private set; }
 
+    public string? Ava { get; private set; }
+
+
     private readonly List<UserRoleEntity> _userRoles = new();
     public IReadOnlyCollection<UserRoleEntity> UserRoles => _userRoles;
 
@@ -39,4 +42,25 @@ public class UserEntity
 
         _userRoles.Add(new UserRoleEntity(roleId));
     }
+    public void UpdateProfile(string? username, string? fullName, string? phone, string? address, string? ava, string? passwordHash)
+    {
+        if (username != null)
+            Username = username;
+
+        if (fullName != null)
+            FullName = fullName;
+
+        if (phone != null)
+            Phone = phone;
+
+        if (address != null)
+            Address = address;
+
+        if (ava != null)
+            Ava = ava;
+
+        if (passwordHash != null)
+            PasswordHash = passwordHash;
+    }
+
 }

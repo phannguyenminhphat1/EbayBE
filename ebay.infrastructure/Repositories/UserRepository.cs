@@ -13,7 +13,7 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
     #region FIND USER BY ID
     public async Task<UserEntity?> FindUserById(int id)
     {
-        var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).SingleOrDefaultAsync(u => u.Id == id && u.Deleted == false);
+        var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstAsync(u => u.Id == id && u.Deleted == false);
         if (user == null) return null;
         var userMapper = _mapper.Map<UserEntity>(user);
         return userMapper;
@@ -67,6 +67,19 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
     public bool ValidateHashPassword(string password, string passwordHash)
     {
         return BCrypt.Net.BCrypt.Verify(password, passwordHash);
+    }
+
+    public async Task UpdateMe(UserEntity userEntity)
+    {
+        var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).SingleAsync(u => u.Id == userEntity.Id && u.Deleted == false);
+        if (user == null) return;
+        user.Address = userEntity.Address;
+        user.PasswordHash = userEntity.PasswordHash;
+        user.FullName = userEntity.FullName;
+        user.Phone = userEntity.Phone;
+        user.Address = userEntity.Address;
+        _context.Users.Update(user);
+
     }
     #endregion
 
