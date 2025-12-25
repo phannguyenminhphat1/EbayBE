@@ -14,6 +14,12 @@ public class UserDto
     [JsonPropertyName("email")]
     public string? Email { get; set; }
 
+    [JsonPropertyName("ava")]
+    public string? Ava { get; set; }
+
+    [JsonPropertyName("address")]
+    public string? Address { get; set; }
+
     [JsonPropertyName("user_roles")]
     public List<UserRoleDto> UserRoles { get; set; } = [];
 }

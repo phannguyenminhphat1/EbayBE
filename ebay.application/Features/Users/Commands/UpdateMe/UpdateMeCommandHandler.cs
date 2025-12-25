@@ -52,9 +52,11 @@ public class UpdateMeCommandHandler : IRequestHandler<UpdateMeCommand, ResponseS
         user.UpdateProfile(request.Dto.Username, request.Dto.FullName, request.Dto.Phone, request.Dto.Address, request.Dto.Ava, null);
         await _userRepo.UpdateMe(user);
         await _unitOfWork.SaveChangesAsync();
+        var userMapper = _mapper.Map<UserDto>(user);
         return new ResponseService<object>(
             statusCode: (int)HttpStatusCode.OK,
-            message: UserMessages.UPDATE_PROFILE_SUCCESSFULLY
+            message: UserMessages.UPDATE_PROFILE_SUCCESSFULLY,
+            data: userMapper
         );
     }
 

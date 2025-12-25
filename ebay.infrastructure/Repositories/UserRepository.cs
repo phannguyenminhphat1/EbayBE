@@ -76,6 +76,7 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
         user.Address = userEntity.Address;
         user.PasswordHash = userEntity.PasswordHash;
         user.FullName = userEntity.FullName;
+        user.Ava = userEntity.Ava;
         user.Phone = userEntity.Phone;
         user.Address = userEntity.Address;
         _context.Users.Update(user);
