@@ -26,12 +26,10 @@ namespace ebay.api.Controllers
 
         [HttpGet("get-orders")]
         [Authorize]
-        [UserIdClaimFilter]
         [PaginationFilter]
         public async Task<IActionResult> GetOrders([FromQuery] GetOrdersQueryDto dto, [FromQuery] PaginationDto paginationDto)
         {
-            var userId = HttpContext.Items["id"];
-            var command = new GetOrdersQuery((int)userId!, dto, paginationDto);
+            var command = new GetOrdersQuery(dto, paginationDto);
             var result = await _sender.Send(command);
             return result.StatusCode switch
             {
@@ -44,11 +42,9 @@ namespace ebay.api.Controllers
 
         [HttpPost("delete-order-details")]
         [Authorize]
-        [UserIdClaimFilter]
         public async Task<IActionResult> DeleteOrderDetail([FromBody] DeleteOrderDetailDto dto)
         {
-            var userId = HttpContext.Items["id"];
-            var command = new DeleteOrderDetailCommand((int)userId!, dto);
+            var command = new DeleteOrderDetailCommand(dto);
             var result = await _sender.Send(command);
             return result.StatusCode switch
             {
@@ -61,11 +57,9 @@ namespace ebay.api.Controllers
 
         [HttpPut("update-order-detail")]
         [Authorize]
-        [UserIdClaimFilter]
         public async Task<IActionResult> UpdateOrderDetail([FromBody] UpdateOrderDetailDto dto)
         {
-            var userId = HttpContext.Items["id"];
-            var command = new UpdateOrderDetailCommand((int)userId!, dto);
+            var command = new UpdateOrderDetailCommand(dto);
             var result = await _sender.Send(command);
             return result.StatusCode switch
             {
@@ -79,11 +73,9 @@ namespace ebay.api.Controllers
 
         [HttpPost("buy-products")]
         [Authorize]
-        [UserIdClaimFilter]
         public async Task<IActionResult> BuyProducts([FromBody] BuyProductsDto dto)
         {
-            var userId = HttpContext.Items["id"];
-            var command = new BuyProductsCommand((int)userId!, dto);
+            var command = new BuyProductsCommand(dto);
             var result = await _sender.Send(command);
             return result.StatusCode switch
             {
@@ -97,12 +89,9 @@ namespace ebay.api.Controllers
 
         [HttpPut("cancel-order")]
         [Authorize]
-        [UserIdClaimFilter]
         public async Task<IActionResult> CancelOrder()
         {
-            var userId = HttpContext.Items["id"];
-            // var roles = (List<string>)HttpContext.Items["Roles"]!;
-            var command = new CancelOrderCommand((int)userId!);
+            var command = new CancelOrderCommand();
             var result = await _sender.Send(command);
             return result.StatusCode switch
             {

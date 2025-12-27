@@ -12,14 +12,11 @@ public class GetMeQueryHandler : IRequestHandler<GetMeQuery, ResponseService<Get
 
     private readonly IMapper _mapper;
 
-    private readonly IUnitOfWork _unitOfWork;
-
     private readonly ICurrentUserService _currentUser;
 
-    public GetMeQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IUserRepository userRepo, ICurrentUserService currentUser)
+    public GetMeQueryHandler(IMapper mapper, IUserRepository userRepo, ICurrentUserService currentUser)
     {
         _userRepo = userRepo;
-        _unitOfWork = unitOfWork;
         _currentUser = currentUser;
         _mapper = mapper;
     }

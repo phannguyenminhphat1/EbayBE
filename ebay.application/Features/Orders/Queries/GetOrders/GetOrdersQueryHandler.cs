@@ -9,16 +9,20 @@ using MediatR;
 public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, ResponseService<ResponsePagedService<object>>>
 {
     private readonly IUserRepository _userRepo;
+    private readonly ICurrentUserService _currentUser;
 
     private readonly IOrdersListingDetailRepository _ordersListingDetailRepo;
-    public GetOrdersQueryHandler(IOrdersListingDetailRepository ordersListingDetailRepo, IUserRepository userRepo)
+    public GetOrdersQueryHandler(IOrdersListingDetailRepository ordersListingDetailRepo, IUserRepository userRepo, ICurrentUserService currentUser)
     {
         _userRepo = userRepo;
         _ordersListingDetailRepo = ordersListingDetailRepo;
+        _currentUser = currentUser;
     }
     public async Task<ResponseService<ResponsePagedService<object>>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
     {
-        var currentUser = await _userRepo.FindUserById(request.UserId);
+        var userId = _currentUser.UserId;
+
+        var currentUser = await _userRepo.FindUserById(userId);
         if (currentUser == null)
         {
             return new ResponseService<ResponsePagedService<object>>(
@@ -39,7 +43,7 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, ResponseSer
             );
         }
 
-        var (orders, totalRecords) = await _ordersListingDetailRepo.GetOrdersListingDetail(request.UserId, status, page, pageSize);
+        var (orders, totalRecords) = await _ordersListingDetailRepo.GetOrdersListingDetail(userId, status, page, pageSize);
         int totalPage = (int)Math.Ceiling((double)totalRecords / pageSize);
 
         var result = orders.Select(o => new OrdersListingDetailDto

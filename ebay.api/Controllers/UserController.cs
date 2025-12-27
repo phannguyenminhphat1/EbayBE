@@ -12,11 +12,9 @@ namespace ebay.api.Controllers
     {
         [HttpGet("get-me")]
         [Authorize]
-        [UserIdClaimFilter]
         public async Task<IActionResult> GetMe()
         {
-            var userId = HttpContext.Items["id"];
-            var query = new GetMeQuery((int)userId!);
+            var query = new GetMeQuery();
             var result = await _sender.Send(query);
             return result.StatusCode switch
             {
@@ -29,11 +27,9 @@ namespace ebay.api.Controllers
 
         [HttpPut("update-me")]
         [Authorize]
-        [UserIdClaimFilter]
         public async Task<IActionResult> UpdateMe(UpdateMeDto dto)
         {
-            var userId = HttpContext.Items["id"];
-            var command = new UpdateMeCommand((int)userId!, dto);
+            var command = new UpdateMeCommand(dto);
             var result = await _sender.Send(command);
             return result.StatusCode switch
             {
@@ -66,11 +62,9 @@ namespace ebay.api.Controllers
         #region CHANGE PASSWORD
         [HttpPut("change-password")]
         [Authorize]
-        [UserIdClaimFilter]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto dto)
         {
-            var userId = HttpContext.Items["id"];
-            var command = new ChangePasswordCommand((int)userId!, dto);
+            var command = new ChangePasswordCommand(dto);
             var result = await _sender.Send(command);
             return result.StatusCode switch
             {

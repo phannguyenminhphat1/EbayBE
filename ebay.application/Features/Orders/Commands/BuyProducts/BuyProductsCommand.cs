@@ -2,4 +2,4 @@ using MediatR;
 
 namespace ebay.application.Features.Orders;
 
-public record BuyProductsCommand(int UserId, BuyProductsDto Dto) : IRequest<ResponseService<object>>;
+public record BuyProductsCommand(BuyProductsDto Dto) : IRequest<ResponseService<object>>;
