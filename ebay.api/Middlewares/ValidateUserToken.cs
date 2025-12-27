@@ -15,9 +15,5 @@ public static class ValidateUserToken
             context.Fail(AuthMessages.USER_NOT_FOUND_OR_IS_DELETED);
             return;
         }
-        context.Principal?.AddIdentity(new ClaimsIdentity(new[]
-        {
-            new Claim("UserId", user.Id.ToString())
-        }));
     }
 }

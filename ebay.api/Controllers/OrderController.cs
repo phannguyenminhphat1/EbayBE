@@ -93,5 +93,24 @@ namespace ebay.api.Controllers
                 _ => Ok(result)
             };
         }
+
+
+        [HttpPut("cancel-order")]
+        [Authorize]
+        [UserIdClaimFilter]
+        public async Task<IActionResult> CancelOrder()
+        {
+            var userId = HttpContext.Items["id"];
+            // var roles = (List<string>)HttpContext.Items["Roles"]!;
+            var command = new CancelOrderCommand((int)userId!);
+            var result = await _sender.Send(command);
+            return result.StatusCode switch
+            {
+                400 => BadRequest(result),
+                404 => NotFound(result),
+                422 => UnprocessableEntity(result),
+                _ => Ok(result)
+            };
+        }
     }
 }

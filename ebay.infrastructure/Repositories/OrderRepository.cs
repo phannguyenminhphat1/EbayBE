@@ -18,7 +18,7 @@ public class OrderRepository : IOrderRepository
 
     public async Task<OrderEntity?> GetOrderInCartById(int buyerId)
     {
-        var order = await _context.Orders.Include(o => o.OrderDetails).SingleOrDefaultAsync(x => x.BuyerId == buyerId && x.Status == "InCart" && x.Deleted == false);
+        var order = await _context.Orders.Include(o => o.OrderDetails).SingleAsync(x => x.BuyerId == buyerId && x.Status == "InCart" && x.Deleted == false);
         if (order == null) return null;
         var orderMapper = _mapper.Map<OrderEntity>(order);
         return orderMapper;

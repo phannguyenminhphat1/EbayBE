@@ -32,7 +32,7 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
         if (!checkOldPassword)
         {
             return new ResponseService<object>(
-               statusCode: (int)HttpStatusCode.NotFound,
+               statusCode: (int)HttpStatusCode.UnprocessableEntity,
                message: CommonMessages.ERROR,
                data: new
                {
