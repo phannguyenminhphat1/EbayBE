@@ -1,4 +1,4 @@
 using MediatR;
 namespace ebay.application.Features.Orders;
 
-public record CancelOrderCommand() : IRequest<ResponseService<string>>;
+public record CancelOrderCommand(string Id) : IRequest<ResponseService<string>>;

@@ -6,20 +6,15 @@ public static class OrderMessages
     public const string ORDER_NOT_FOUND = "Order not found";
 
     public const string BUY_SUCCESSFULLY_AND_WAITING_CONFIRMATION = "Buy products successfully, waiting for owner confirmation";
-
-
     public const string LISTING_ID_IS_REQUIRED = "Listing id is required";
     public const string LISTING_NOT_FOUND = "Listing not found";
 
-
-
     public const string ORDER_STATUS_IS_NOT_IN_CART = "Order status is not in cart";
-
     public const string UPDATE_ORDER_SUCCESSFULLY = "Update order successfully";
 
-
-
     public const string ORDER_DETAIL_DELETE_SUCCESSFULLY = "Order detail delete successfully";
+    public const string DELETE_ORDER_SUCCESSFULLY = "Delete order successfully";
+    public const string CANCEL_ORDER_SUCCESSFULLY = "Cancel order successfully";
 
 
     public const string NOT_YOURS_ORDER = "Not yours order";

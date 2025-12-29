@@ -24,6 +24,14 @@ public class OrderRepository : IOrderRepository
         return orderMapper;
     }
 
+    public async Task<OrderEntity?> GetOrderById(int buyerId, string? status, int id)
+    {
+        var order = await _context.Orders.Include(o => o.OrderDetails).SingleOrDefaultAsync(x => x.BuyerId == buyerId && x.Status == status && x.Deleted == false && x.Id == id);
+        if (order == null) return null;
+        var orderMapper = _mapper.Map<OrderEntity>(order);
+        return orderMapper;
+    }
+
     public async Task<OrderEntity?> GetByOrderDetailIds(List<int> detailIds, int buyerId)
     {
         var distinctIds = detailIds.Distinct().ToList();
@@ -65,6 +73,7 @@ public class OrderRepository : IOrderRepository
 
         order.TotalAmount = orderEntity.TotalAmount;
         order.Status = orderEntity.Status;
+        order.Deleted = orderEntity.Deleted;
 
         foreach (var item in orderEntity.OrderDetails)
         {

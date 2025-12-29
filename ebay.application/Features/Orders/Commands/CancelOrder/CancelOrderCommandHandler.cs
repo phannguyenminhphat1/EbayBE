@@ -1,3 +1,5 @@
+using System.Net;
+using System.Text.Json;
 using ebay.application.Features.Orders;
 using MediatR;
 
@@ -19,6 +21,24 @@ public class CancelOrderCommandHandler : IRequestHandler<CancelOrderCommand, Res
     }
     public async Task<ResponseService<string>> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var userId = _currentUser.UserId;
+        int id = int.Parse(request.Id);
+        var order = await _orderRepo.GetOrderById(userId, OrderStatusEnum.WaitingOwnerConfirmation.ToString(), id);
+        if (order == null)
+        {
+            return new ResponseService<string>(
+                statusCode: (int)HttpStatusCode.NotFound,
+                message: OrderMessages.ORDER_NOT_FOUND
+            );
+        }
+        order.SoftDelete();
+        System.Console.WriteLine("---------------------------------------------------------------------");
+        System.Console.WriteLine(JsonSerializer.Serialize(order));
+        await _orderRepo.Update(order);
+        await _unitOfWork.SaveChangesAsync();
+        return new ResponseService<string>(
+            statusCode: (int)HttpStatusCode.OK,
+            message: OrderMessages.CANCEL_ORDER_SUCCESSFULLY
+        );
     }
 }

@@ -87,11 +87,12 @@ namespace ebay.api.Controllers
         }
 
 
-        [HttpPut("cancel-order")]
+        [HttpPut("cancel-order/{id}")]
         [Authorize]
-        public async Task<IActionResult> CancelOrder()
+        [ParseIdFilter]
+        public async Task<IActionResult> CancelOrder([FromRoute] string id)
         {
-            var command = new CancelOrderCommand();
+            var command = new CancelOrderCommand(id);
             var result = await _sender.Send(command);
             return result.StatusCode switch
             {
