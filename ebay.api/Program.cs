@@ -6,6 +6,7 @@ using ebay.application;
 using ebay.application.Interfaces;
 using ebay.domain.Interfaces;
 using ebay.infrastructure.Data;
+using ebay.infrastructure.Queries;
 using ebay.infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -105,6 +106,7 @@ builder.Services.AddScoped<IProductListCategoryRepository, ProductListCategoryRe
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IListingProductDetailRepository, ListingProductDetailRepository>();
 builder.Services.AddScoped<IOrdersListingDetailRepository, OrdersListingDetailRepository>();
+builder.Services.AddScoped<IOrderDetailQuery, OrderDetailQuery>();
 builder.Services.AddScoped<IListingRepository, ListingRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
