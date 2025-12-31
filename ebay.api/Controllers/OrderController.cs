@@ -29,8 +29,8 @@ namespace ebay.api.Controllers
         [PaginationFilter]
         public async Task<IActionResult> GetOrders([FromQuery] GetOrdersQueryDto dto, [FromQuery] PaginationDto paginationDto)
         {
-            var command = new GetOrdersQuery(dto, paginationDto);
-            var result = await _sender.Send(command);
+            var query = new GetOrdersQuery(dto, paginationDto);
+            var result = await _sender.Send(query);
             return result.StatusCode switch
             {
                 400 => BadRequest(result),
@@ -102,5 +102,6 @@ namespace ebay.api.Controllers
                 _ => Ok(result)
             };
         }
+
     }
 }

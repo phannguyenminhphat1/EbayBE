@@ -24,6 +24,9 @@ public class ListingEntity
     private readonly List<BidEntity> _bids = new();
     public IReadOnlyCollection<BidEntity> Bids => _bids;
 
+    private ProductEntity? _product;
+    public ProductEntity? Product => _product;
+
     public ListingEntity(
         int sellerId,
         int? categoryId,
@@ -32,7 +35,7 @@ public class ListingEntity
         decimal? startingPrice,
         bool? isAuction,
         DateTime? endDate,
-        int? productId
+        int? productId, string status
     )
     {
         SellerId = sellerId;
@@ -44,7 +47,7 @@ public class ListingEntity
         CurrentPrice = startingPrice;
         IsAuction = isAuction;
         EndDate = endDate;
-        Status = "Active";
+        Status = status;
         CreatedAt = DateTime.Now;
         Deleted = false;
     }
@@ -52,6 +55,14 @@ public class ListingEntity
     public void UpdateCategory(int? categoryId)
     {
         CategoryId = categoryId;
+    }
+
+    public void AttachProduct(ProductEntity product)
+    {
+        if (product.Id != ProductId)
+            throw new InvalidOperationException("Product mismatch");
+
+        _product = product;
     }
 
     public void UpdatePrice(decimal newPrice)

@@ -13,17 +13,7 @@ public class ListingProductDetailRepository(IMapper _mapper, EBayDbContext _cont
         return listingProductDetailMapper;
     }
 
-    public async Task<(IEnumerable<ListingProductDetailEntity> ListListingProductDetail, int TotalRecords)>
-        GetListListingProductDetail(
-            int? page,
-            int? pageSize = 10,
-            string? name = null,
-            string? categoryId = null,
-            string? priceMin = null,
-            string? priceMax = null,
-            string? ratingFilter = null,
-            string? order = null,
-            string? sortBy = null)
+    public async Task<(IEnumerable<ListingProductDetailEntity> ListListingProductDetail, int TotalRecords)> GetListListingProductDetail(int? page, int? pageSize = 10, string? name = null, string? categoryId = null, string? priceMin = null, string? priceMax = null, string? ratingFilter = null, string? order = null, string? sortBy = null)
     {
         var query = _context.ListingProductDetails
             .Where(l => l.Status == "Active" && l.Deleted == false)
@@ -69,6 +59,50 @@ public class ListingProductDetailRepository(IMapper _mapper, EBayDbContext _cont
             "created_at" => isDesc ? query.OrderByDescending(x => x.CreatedAt) : query.OrderBy(x => x.CreatedAt),
             _ => isDesc ? query.OrderByDescending(x => x.CreatedAt) : query.OrderBy(x => x.CreatedAt)
         };
+
+        var totalRecord = await query.CountAsync();
+
+        // PAGINATION
+        page ??= 1;
+        pageSize ??= 10;
+
+        var lstRaw = await query
+            .Skip((page.Value - 1) * pageSize.Value)
+            .Take(pageSize.Value)
+            .ToListAsync();
+
+        // MAP TO DOMAIN ENTITY
+        var lstMapping = _mapper.Map<List<ListingProductDetailEntity>>(lstRaw);
+
+        return (lstMapping, totalRecord);
+    }
+
+
+    public async Task<(IEnumerable<ListingProductDetailEntity> ListListing, int TotalRecords)> GetListListingPost(int userId, string userRole, int? page, int? pageSize = 10, string? name = null, string? order = null, string? status = null)
+    {
+        var query = _context.ListingProductDetails
+            .Where(l => l.Status == status && l.Deleted == false)
+            .AsQueryable();
+
+        if (userRole.Equals(UserRoleEnum.Seller.ToString(), StringComparison.OrdinalIgnoreCase))
+        {
+            query = query.Where(x => x.UserId == userId);
+        }
+        else if (!userRole.Equals(UserRoleEnum.Admin.ToString(), StringComparison.OrdinalIgnoreCase))
+        {
+            return (Enumerable.Empty<ListingProductDetailEntity>(), 0);
+        }
+
+        // NAME FILTER
+        if (!string.IsNullOrWhiteSpace(name))
+        {
+            var key = name.Trim().ToLower();
+            query = query.Where(x => x.Name!.ToLower().Contains(key));
+        }
+
+        // SORTING
+        bool isDesc = string.IsNullOrWhiteSpace(order) || order.ToLower() == "desc";
+        query = isDesc ? query.OrderByDescending(x => x.CreatedAt) : query.OrderBy(x => x.CreatedAt);
 
         var totalRecord = await query.CountAsync();
 

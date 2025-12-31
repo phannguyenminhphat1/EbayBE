@@ -62,8 +62,7 @@ public class GetListListingProductDetailQueryHandler : IRequestHandler<GetListLi
         }
 
         // PRICE RANGE CHECK
-        if (decimal.TryParse(q.PriceMin, out var min) &&
-            decimal.TryParse(q.PriceMax, out var max))
+        if (decimal.TryParse(q.PriceMin, out var min) && decimal.TryParse(q.PriceMax, out var max))
         {
             if (max < min)
             {

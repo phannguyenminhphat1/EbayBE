@@ -15,5 +15,6 @@ public interface IUserRepository
     Task AddUser(UserEntity userEntity);
 
     Task<UserEntity?> FindUserById(int id);
+    Task AddRoleToUser(int userId, int roleId);
 
 }

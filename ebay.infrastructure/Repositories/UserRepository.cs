@@ -84,4 +84,24 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
     }
     #endregion
 
+    #region Add Role To User
+    public async Task AddRoleToUser(int userId, int roleId)
+    {
+        var user = await _context.Users
+            .Include(u => u.UserRoles)
+            .FirstOrDefaultAsync(u => u.Id == userId && u.Deleted == false);
+
+        if (user == null) return;
+
+        if (user.UserRoles.Any(r => r.RoleId == roleId)) return;
+
+        user.UserRoles.Add(new UserRole
+        {
+            RoleId = roleId
+        });
+    }
+
+
+    #endregion
+
 }

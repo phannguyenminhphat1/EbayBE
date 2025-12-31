@@ -7,16 +7,14 @@ public class CancelOrderCommandHandler : IRequestHandler<CancelOrderCommand, Res
 {
     private readonly IOrderRepository _orderRepo;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IOrderDetailRepository _orderDetailRepo;
 
     private readonly ICurrentUserService _currentUser;
 
-    public CancelOrderCommandHandler(IOrderRepository orderRepo, IOrderDetailRepository orderDetailRepo, IUnitOfWork unitOfWork, ICurrentUserService currentUser)
+    public CancelOrderCommandHandler(IOrderRepository orderRepo, IUnitOfWork unitOfWork, ICurrentUserService currentUser)
     {
         _orderRepo = orderRepo;
         _unitOfWork = unitOfWork;
         _currentUser = currentUser;
-        _orderDetailRepo = orderDetailRepo;
 
     }
     public async Task<ResponseService<string>> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
@@ -32,8 +30,6 @@ public class CancelOrderCommandHandler : IRequestHandler<CancelOrderCommand, Res
             );
         }
         order.SoftDelete();
-        System.Console.WriteLine("---------------------------------------------------------------------");
-        System.Console.WriteLine(JsonSerializer.Serialize(order));
         await _orderRepo.Update(order);
         await _unitOfWork.SaveChangesAsync();
         return new ResponseService<string>(

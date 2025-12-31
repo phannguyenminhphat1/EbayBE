@@ -35,7 +35,4 @@ public static class OrderMessages
     public const string BUYER_ID_IS_REQUIRED = "Buyer id is required";
     public const string ADD_TO_CART_SUCCESSFULLY = "Add to cart successfully";
 
-
-
-
 }
