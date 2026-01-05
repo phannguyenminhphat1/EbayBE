@@ -107,6 +107,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IListingProductDetailRepository, ListingProductDetailRepository>();
 builder.Services.AddScoped<IOrdersListingDetailRepository, OrdersListingDetailRepository>();
 builder.Services.AddScoped<IOrderDetailQuery, OrderDetailQuery>();
+builder.Services.AddScoped<IGetOrdersBySellerQuery, GetOrdersBySellerQuery>();
 builder.Services.AddScoped<IListingRepository, ListingRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();

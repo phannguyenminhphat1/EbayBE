@@ -7,8 +7,6 @@ public interface IOrderRepository
     Task Add(OrderEntity orderEntity);
     Task Update(OrderEntity orderEntity);
     Task<OrderEntity?> GetByOrderDetailIds(List<int> detailIds, int buyerId);
-
-
-
+    Task<OrderEntity?> GetOrderForSeller(int orderId, int sellerId, string status);
 
 }

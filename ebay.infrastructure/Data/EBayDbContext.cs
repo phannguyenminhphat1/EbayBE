@@ -30,6 +30,8 @@ public partial class EBayDbContext : DbContext
 
     public virtual DbSet<GetListingProductDetail> GetListingProductDetails { get; set; }
 
+    public virtual DbSet<GetOrdersBySeller> GetOrdersBySellers { get; set; }
+
     public virtual DbSet<GetOrdersListingDetail> GetOrdersListingDetails { get; set; }
 
     public virtual DbSet<Group> Groups { get; set; }
@@ -198,6 +200,29 @@ public partial class EBayDbContext : DbContext
             entity.Property(e => e.Phone).HasMaxLength(255);
             entity.Property(e => e.StartingPrice).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Status).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<GetOrdersBySeller>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("GetOrdersBySeller");
+
+            entity.Property(e => e.BuyerAddress).HasMaxLength(255);
+            entity.Property(e => e.BuyerAva).IsUnicode(false);
+            entity.Property(e => e.BuyerAvatar).HasMaxLength(128);
+            entity.Property(e => e.BuyerEmail).HasMaxLength(100);
+            entity.Property(e => e.BuyerFullName).HasMaxLength(100);
+            entity.Property(e => e.BuyerPhone).HasMaxLength(255);
+            entity.Property(e => e.OrderCreatedAt).HasColumnType("datetime");
+            entity.Property(e => e.OrderStatus).HasMaxLength(50);
+            entity.Property(e => e.SellerAddress).HasMaxLength(255);
+            entity.Property(e => e.SellerAva).IsUnicode(false);
+            entity.Property(e => e.SellerAvatar).HasMaxLength(128);
+            entity.Property(e => e.SellerEmail).HasMaxLength(100);
+            entity.Property(e => e.SellerFullName).HasMaxLength(100);
+            entity.Property(e => e.SellerPhone).HasMaxLength(255);
+            entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
         });
 
         modelBuilder.Entity<GetOrdersListingDetail>(entity =>

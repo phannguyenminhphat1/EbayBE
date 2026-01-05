@@ -42,6 +42,36 @@ namespace ebay.api.Controllers
             };
         }
 
+        [HttpPost("delete-listings")]
+        [Authorize(Roles = "Seller,Admin")]
+        public async Task<IActionResult> DeleteListings([FromBody] DeleteListingDto dto)
+        {
+            var command = new DeleteListingCommand(dto);
+            var result = await _sender.Send(command);
+            return result.StatusCode switch
+            {
+                400 => BadRequest(result),
+                404 => NotFound(result),
+                422 => UnprocessableEntity(result),
+                _ => Ok(result)
+            };
+        }
+
+        [HttpPost("approve-cancel-listing")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ApproveOrCancelListing([FromRoute] string id, [FromBody] ListingStatusDto dto)
+        {
+            var command = new ApproveOrCancelListingCommand(id, dto);
+            var result = await _sender.Send(command);
+            return result.StatusCode switch
+            {
+                400 => BadRequest(result),
+                404 => NotFound(result),
+                422 => UnprocessableEntity(result),
+                _ => Ok(result)
+            };
+        }
+
         #region UPLOAD IMAGES
         [HttpPost("upload-images")]
         [Authorize]

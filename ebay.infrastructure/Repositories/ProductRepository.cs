@@ -43,4 +43,18 @@ public class ProductRepository : IProductRepository
         }
         await _context.Products.AddAsync(product);
     }
+
+
+    public async Task SoftDeleteByListingIds(List<int> listingProductIds)
+    {
+        var productIds = await _context.Products.Where(p => listingProductIds.Contains(p.Id) && p.Deleted == false).Select(p => p.Id).ToListAsync();
+
+        if (!productIds.Any()) return;
+
+        await _context.Products.Where(p => productIds.Contains(p.Id)).ExecuteUpdateAsync(s => s.SetProperty(p => p.Deleted, true));
+
+        await _context.ProductImages.Where(img => productIds.Contains(img.ProductId!.Value)).ExecuteUpdateAsync(s => s.SetProperty(img => img.Deleted, true));
+    }
+
+
 }

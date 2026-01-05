@@ -11,6 +11,13 @@ public static class ListingMessages
     public const string IMAGES_IS_REQUIRED = "Images is required";
     public const string UPLOAD_IMAGES_SUCCESSFULLY = "Upload images successfully";
 
+    public const string LISTING_NOT_FOUND = "Listing not found";
+    public const string LISTING_STATUS_MUST_BE_WAITING = "Listing status is not waiting to approve";
+    public const string DELETE_LISTING_SUCCESSFULLY = "Delete listing successfully";
+    public const string LISTING_IDS_ARE_REQUIRED = "Listing ids are required";
+
+
+
 
     public const string LISTING_DESCRIPTION_IS_REQUIRED = "Listing description is required";
     public const string PRODUCT_NAME_IS_REQUIRED = "Product name is required";

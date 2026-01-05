@@ -1,4 +1,6 @@
 using ebay.application.Features.Orders;
+using ebay.application.Features.Orders.Commands;
+using ebay.application.Features.Orders.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +32,23 @@ namespace ebay.api.Controllers
         public async Task<IActionResult> GetOrders([FromQuery] GetOrdersQueryDto dto, [FromQuery] PaginationDto paginationDto)
         {
             var query = new GetOrdersQuery(dto, paginationDto);
+            var result = await _sender.Send(query);
+            return result.StatusCode switch
+            {
+                400 => BadRequest(result),
+                404 => NotFound(result),
+                422 => UnprocessableEntity(result),
+                _ => Ok(result)
+            };
+        }
+
+
+        [HttpGet("get-orders-by-seller")]
+        [Authorize(Roles = "Seller")]
+        [PaginationFilter]
+        public async Task<IActionResult> GetOrdersBySeller([FromQuery] GetOrdersQueryDto dto, [FromQuery] PaginationDto paginationDto)
+        {
+            var query = new GetOrdersBySellerQuery(dto, paginationDto);
             var result = await _sender.Send(query);
             return result.StatusCode switch
             {
@@ -93,6 +112,22 @@ namespace ebay.api.Controllers
         public async Task<IActionResult> CancelOrder([FromRoute] string id)
         {
             var command = new CancelOrderCommand(id);
+            var result = await _sender.Send(command);
+            return result.StatusCode switch
+            {
+                400 => BadRequest(result),
+                404 => NotFound(result),
+                422 => UnprocessableEntity(result),
+                _ => Ok(result)
+            };
+        }
+
+        [HttpPut("reject-confirm-order/{id}")]
+        [Authorize(Roles = "Seller")]
+        [ParseIdFilter]
+        public async Task<IActionResult> RejectAndConfirmOrder([FromRoute] string id, [FromBody] RejectAndConfirmDto dto)
+        {
+            var command = new RejectAndConfirmOrderCommand(id, dto);
             var result = await _sender.Send(command);
             return result.StatusCode switch
             {

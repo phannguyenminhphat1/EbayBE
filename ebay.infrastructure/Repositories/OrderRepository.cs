@@ -97,5 +97,23 @@ public class OrderRepository : IOrderRepository
         }
     }
 
+    public async Task<OrderEntity?> GetOrderForSeller(int orderId, int sellerId, string status)
+    {
+        var order = await _context.Orders.Include(o => o.OrderDetails).ThenInclude(od => od.Listing)
+            .Where(o =>
+                o.Id == orderId &&
+                o.Status == status &&
+                o.Deleted == false &&
+                o.OrderDetails.Any(od =>
+                    od.Deleted == false &&
+                    od.Listing != null &&
+                    od.Listing.SellerId == sellerId
+                )
+            )
+            .SingleOrDefaultAsync();
+
+        return order == null ? null : _mapper.Map<OrderEntity>(order);
+    }
+
 
 }

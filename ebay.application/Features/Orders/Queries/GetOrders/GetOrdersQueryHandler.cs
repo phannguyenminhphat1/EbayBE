@@ -92,10 +92,6 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, ResponseSer
                         ImageUrl = pi.ImageUrl
                     }).ToList()
                 },
-
-
-
-
             }).ToList()
         }).ToList();
 

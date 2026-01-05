@@ -8,7 +8,6 @@ public class OrdersListingDetailRepository : ebay.application.Interfaces.IOrders
     private readonly EBayDbContext _context;
     private readonly IMapper _mapper;
 
-
     public OrdersListingDetailRepository(EBayDbContext context, IMapper mapper)
     {
         _context = context;
@@ -29,5 +28,6 @@ public class OrdersListingDetailRepository : ebay.application.Interfaces.IOrders
         var ordersMapper = _mapper.Map<List<OrdersListingDetailReadModel>>(orders);
         return (ordersMapper, totalRecords);
     }
+
 
 }
