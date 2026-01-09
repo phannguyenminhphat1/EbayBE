@@ -24,7 +24,7 @@ public class GetOrderBySellerDto
     public GetOrderSellerDto? Seller { get; set; }
 
     [JsonPropertyName("order_details")]
-    public List<GetOrderDetailsDto>? OrderDetails { get; set; }
+    public List<GetSellerOrderDetailsDto>? OrderDetails { get; set; }
 
 }
 
@@ -68,13 +68,13 @@ public class GetOrderSellerDto
     public string? SellerAddress { get; set; }
 
     [JsonPropertyName("seller_avatar")]
-    public string SellerAvatar { get; set; } = null!;
+    public string? SellerAvatar { get; set; }
 
     [JsonPropertyName("seller_ava")]
     public string? SellerAva { get; set; }
 }
 
-public class GetOrderDetailsDto
+public class GetSellerOrderDetailsDto
 {
     [JsonPropertyName("order_detail_id")]
     public int OrderDetailId { get; set; }

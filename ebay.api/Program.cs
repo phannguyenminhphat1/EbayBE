@@ -113,6 +113,7 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<IOptionalCurrentUserService, OptionalCurrentUserService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 

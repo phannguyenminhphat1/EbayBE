@@ -44,6 +44,7 @@ public class ApproveOrCancelListingCommandHandler : IRequestHandler<ApproveOrCan
         listing.UpdateStatus(request.Dto.Status!);
         await _listingRepo.Update(listing);
         var msg = request.Dto.Status == ListingStatusEnum.Canceled.ToString() ? "Canceled listing successfully" : "Approve listing successfully";
+        await _unitOfWork.SaveChangesAsync();
         return new ResponseService<string>(
             statusCode: (int)HttpStatusCode.OK,
             message: msg

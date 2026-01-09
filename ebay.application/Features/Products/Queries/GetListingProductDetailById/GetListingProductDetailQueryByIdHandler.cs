@@ -8,15 +8,20 @@ public class GetListingProductDetailByIdQueryHandler : IRequestHandler<GetListin
     private readonly IMapper _mapper;
     private readonly IListingProductDetailRepository _listingProductDetailRepository;
 
-    public GetListingProductDetailByIdQueryHandler(IMapper mapper, IListingProductDetailRepository listingRepo)
+    private readonly IOptionalCurrentUserService _optionalCurrentUserService;
+
+    public GetListingProductDetailByIdQueryHandler(IMapper mapper, IListingProductDetailRepository listingRepo, IOptionalCurrentUserService optionalCurrentUserService)
     {
         _mapper = mapper;
         _listingProductDetailRepository = listingRepo;
+        _optionalCurrentUserService = optionalCurrentUserService;
+
     }
 
     public async Task<ResponseService<object>> Handle(GetListingProductDetailByIdQuery request, CancellationToken cancellationToken)
     {
         int id = int.Parse(request.Id);
+        int? currentUserId = _optionalCurrentUserService.UserId;
         var listingProductDetail = await _listingProductDetailRepository.GetListingProductDetailById(id);
         if (listingProductDetail == null)
         {
@@ -25,7 +30,7 @@ public class GetListingProductDetailByIdQueryHandler : IRequestHandler<GetListin
                 message: ProductMessages.PRODUCT_NOT_FOUND
             );
         }
-        var (relatedProductsList, _) = await _listingProductDetailRepository.GetListListingProductDetail(categoryId: listingProductDetail.CategoryId.ToString());
+        var (relatedProductsList, _) = await _listingProductDetailRepository.GetListListingProductDetail(currentUserId, categoryId: listingProductDetail.CategoryId.ToString());
         var listingProductDetailMapper = _mapper.Map<GetListingProductDetailDto>(listingProductDetail);
         var relatedProductsListMapper = _mapper.Map<List<GetListingProductDetailDto>>(relatedProductsList);
         return new ResponseService<object>(

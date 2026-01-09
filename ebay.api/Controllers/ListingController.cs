@@ -12,7 +12,7 @@ namespace ebay.api.Controllers
     {
 
         [HttpGet("get-listings")]
-        [Authorize(Roles = "Admin,Seller")]
+        // [Authorize(Roles = "Admin,Seller")]
         [PaginationFilter]
         public async Task<IActionResult> GetListings([FromQuery] GetListingsQueryDto dto, [FromQuery] PaginationDto paginationDto)
         {
@@ -59,9 +59,9 @@ namespace ebay.api.Controllers
 
         [HttpPost("approve-cancel-listing")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ApproveOrCancelListing([FromRoute] string id, [FromBody] ListingStatusDto dto)
+        public async Task<IActionResult> ApproveOrCancelListing([FromBody] ListingStatusDto dto)
         {
-            var command = new ApproveOrCancelListingCommand(id, dto);
+            var command = new ApproveOrCancelListingCommand(dto);
             var result = await _sender.Send(command);
             return result.StatusCode switch
             {

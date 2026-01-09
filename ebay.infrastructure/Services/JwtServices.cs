@@ -30,26 +30,24 @@ public class JwtService : IJwtService
         {
             if (string.IsNullOrEmpty(token))
             {
-                throw new ArgumentException("Token không được để trống", nameof(token));
+                throw new ArgumentException("Token is required", nameof(token));
             }
 
-            // Tạo handler và đọc token
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadJwtToken(token);
 
-            // Lấy username từ claims (thường nằm trong claim "sub" hoặc "name")
-            var usernameClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == "Username"); // Common in some identity providers
+            var usernameClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == "Username");
 
             if (usernameClaim == null)
             {
-                throw new InvalidOperationException("Không tìm thấy username trong payload");
+                throw new InvalidOperationException("Username not found in payload");
             }
 
             return usernameClaim.Value;
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"Lỗi khi decode token: {ex.Message}", ex);
+            throw new InvalidOperationException($"Decoded error: {ex.Message}", ex);
         }
     }
     #endregion
@@ -84,9 +82,9 @@ public class JwtService : IJwtService
             .Select(ur => ur.Role.RoleName)
             .ToList();
 
-        foreach (var role in userRoles)// duyệt qua từng role
+        foreach (var role in userRoles)
         {
-            claims.Add(new Claim(ClaimTypes.Role, role.ToString())); // thêm claim Role
+            claims.Add(new Claim(ClaimTypes.Role, role.ToString()));
         }
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);

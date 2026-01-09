@@ -64,16 +64,16 @@ public class GetOrderDetailsBySellerReadModel
 
     public string ListingStatus { get; set; } = null!;
 
-    // public DateTime? ListingCreatedAt { get; set; }
+    public DateTime? ListingCreatedAt { get; set; }
 
     // ===== PRODUCT (derived from listing) =====
     public int ProductId { get; set; }
 
     public string ProductName { get; set; } = null!;
 
-    // public string? Description { get; set; }
+    public string? Description { get; set; }
 
-    // public int Stock { get; set; }
+    public int Stock { get; set; }
     public List<GetProductImageBySellerReadModel> ProductImages { get; set; } = [];
 
 

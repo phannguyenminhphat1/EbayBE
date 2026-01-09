@@ -8,22 +8,23 @@ public class GetListListingProductDetailQueryHandler : IRequestHandler<GetListLi
     private readonly IMapper _mapper;
     private readonly IListingProductDetailRepository _listingRepo;
     private readonly ICategoryRepository _categoryRepo;
+    private readonly IOptionalCurrentUserService _optionalCurrentUserService;
 
-    public GetListListingProductDetailQueryHandler(
-        IMapper mapper,
-        IListingProductDetailRepository listingRepo,
-        ICategoryRepository categoryRepo)
+
+
+    public GetListListingProductDetailQueryHandler(IMapper mapper, IOptionalCurrentUserService optionalCurrentUserService, IListingProductDetailRepository listingRepo, ICategoryRepository categoryRepo)
     {
         _mapper = mapper;
         _listingRepo = listingRepo;
         _categoryRepo = categoryRepo;
+        _optionalCurrentUserService = optionalCurrentUserService;
     }
 
-    public async Task<ResponseService<ResponsePagedService<object>>> Handle(
-        GetListListingProductDetailQuery request, CancellationToken cancellationToken)
+    public async Task<ResponseService<ResponsePagedService<object>>> Handle(GetListListingProductDetailQuery request, CancellationToken cancellationToken)
     {
         var q = request.ListingProductDetailQueryDto;
         string? categoryName = null;
+        int? currentUserId = _optionalCurrentUserService.UserId;
 
         // PAGE & PAGESIZE
         int page = int.Parse(request.PaginationDto.Page!);
@@ -106,6 +107,7 @@ public class GetListListingProductDetailQueryHandler : IRequestHandler<GetListLi
 
 
         var (list, totalRecords) = await _listingRepo.GetListListingProductDetail(
+            currentUserId,
             page,
             pageSize,
             q.Name,

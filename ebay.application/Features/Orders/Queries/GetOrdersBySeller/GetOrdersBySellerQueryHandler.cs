@@ -72,7 +72,7 @@ public class GetOrdersBySellerQueryHandler : IRequestHandler<GetOrdersBySellerQu
                 SellerFullName = o.SellerFullName,
                 SellerPhone = o.SellerPhone
             },
-            OrderDetails = string.IsNullOrEmpty(o.OrderDetails) ? [] : JsonSerializer.Deserialize<List<GetOrderDetailsDto>>(o.OrderDetails)?.Select(od => new GetOrderDetailsDto
+            OrderDetails = string.IsNullOrEmpty(o.OrderDetails) ? [] : JsonSerializer.Deserialize<List<GetOrderDetailsBySellerReadModel>>(o.OrderDetails)?.Select(od => new GetSellerOrderDetailsDto
             {
                 OrderDetailId = od.OrderDetailId,
                 Quantity = od.Quantity,
@@ -80,17 +80,18 @@ public class GetOrdersBySellerQueryHandler : IRequestHandler<GetOrdersBySellerQu
                 CreatedAt = od.CreatedAt,
                 Listing = new ListingDto
                 {
-                    ListingTitle = od.Listing!.ListingTitle,
-                    ListingStatus = od.Listing.ListingStatus,
-                    ListingCreatedAt = od.Listing.ListingCreatedAt,
+
+                    ListingTitle = od.ListingTitle,
+                    ListingStatus = od.ListingStatus,
+                    ListingCreatedAt = od.ListingCreatedAt,
                 },
                 Product = new ProductDto
                 {
-                    ProductId = od.Product!.ProductId,
-                    ProductName = od.Product.ProductName,
-                    Description = od.Product.Description,
-                    Stock = od.Product.Stock,
-                    ProductImages = od.Product.ProductImages.Select(pi => new ProductImageDto
+                    ProductId = od.ProductId,
+                    ProductName = od.ProductName,
+                    Description = od.Description,
+                    Stock = od.Stock,
+                    ProductImages = od.ProductImages.Select(pi => new ProductImageDto
                     {
                         Id = pi.Id,
                         ImageUrl = pi.ImageUrl

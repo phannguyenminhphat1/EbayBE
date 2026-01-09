@@ -9,8 +9,7 @@ public class CurrentUserService : ICurrentUserService
 
     public CurrentUserService(IHttpContextAccessor accessor)
     {
-        var user = accessor.HttpContext?.User
-           ?? throw new UnauthorizedAccessException();
+        var user = accessor.HttpContext?.User ?? throw new UnauthorizedAccessException();
 
         var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
@@ -18,8 +17,6 @@ public class CurrentUserService : ICurrentUserService
 
         UserId = userId;
 
-        Roles = user.FindAll(ClaimTypes.Role)
-                    .Select(r => r.Value)
-                    .ToList();
+        Roles = user.FindAll(ClaimTypes.Role).Select(r => r.Value).ToList();
     }
 }

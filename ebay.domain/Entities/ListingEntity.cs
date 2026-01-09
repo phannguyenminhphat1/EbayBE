@@ -86,4 +86,5 @@ public class ListingEntity
         Deleted = true;
         Status = "Deleted";
     }
+
 }

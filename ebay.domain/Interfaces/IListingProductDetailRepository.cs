@@ -4,6 +4,7 @@ public interface IListingProductDetailRepository
 {
 
     Task<(IEnumerable<ListingProductDetailEntity> ListListingProductDetail, int TotalRecords)> GetListListingProductDetail(
+        int? currentUserId,
         int? page = 1,
         int? pageSize = 10,
         string? name = null,

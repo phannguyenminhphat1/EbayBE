@@ -13,11 +13,16 @@ public class ListingProductDetailRepository(IMapper _mapper, EBayDbContext _cont
         return listingProductDetailMapper;
     }
 
-    public async Task<(IEnumerable<ListingProductDetailEntity> ListListingProductDetail, int TotalRecords)> GetListListingProductDetail(int? page, int? pageSize = 10, string? name = null, string? categoryId = null, string? priceMin = null, string? priceMax = null, string? ratingFilter = null, string? order = null, string? sortBy = null)
+    public async Task<(IEnumerable<ListingProductDetailEntity> ListListingProductDetail, int TotalRecords)> GetListListingProductDetail(int? currentUserId, int? page, int? pageSize = 10, string? name = null, string? categoryId = null, string? priceMin = null, string? priceMax = null, string? ratingFilter = null, string? order = null, string? sortBy = null)
     {
         var query = _context.ListingProductDetails
             .Where(l => l.Status == "Active" && l.Deleted == false)
             .AsQueryable();
+
+        if (currentUserId.HasValue)
+        {
+            query = query.Where(l => l.UserId != currentUserId);
+        }
 
         // CATEGORY FILTER
         if (!string.IsNullOrWhiteSpace(categoryId) && int.TryParse(categoryId, out var cateId))

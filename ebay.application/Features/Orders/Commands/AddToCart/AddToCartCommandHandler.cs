@@ -33,6 +33,14 @@ public class AddToCartCommandHandler : IRequestHandler<AddToCartCommand, Respons
             );
         }
 
+        if (listing.SellerId == _currentUser.UserId)
+        {
+            return new ResponseService<object>(
+                statusCode: (int)HttpStatusCode.BadRequest,
+                message: OrderMessages.YOU_CANNOT_BUY_YOUR_OWN_PRODUCT
+            );
+        }
+
         if (!int.TryParse(request.Dto.Quantity, out int quantity))
         {
             return new ResponseService<object>(

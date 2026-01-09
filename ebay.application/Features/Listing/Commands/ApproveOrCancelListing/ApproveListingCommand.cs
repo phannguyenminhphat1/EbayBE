@@ -2,4 +2,4 @@ using MediatR;
 
 namespace ebay.application.Features.Listing;
 
-public record ApproveOrCancelListingCommand(string Id, ListingStatusDto Dto) : IRequest<ResponseService<string>>;
+public record ApproveOrCancelListingCommand(ListingStatusDto Dto) : IRequest<ResponseService<string>>;

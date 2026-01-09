@@ -75,7 +75,7 @@ public class GetListingsQueryHandler : IRequestHandler<GetListingsQuery, Respons
         var data = new ResponsePagedService<object>(
             data: new
             {
-                products = listMapped
+                listings = listMapped
             },
             pagination: new Pagination(page, pageSize, totalRecords, totalPage)
         );
