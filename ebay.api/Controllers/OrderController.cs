@@ -138,5 +138,21 @@ namespace ebay.api.Controllers
             };
         }
 
+
+        [HttpGet("get-order-statistics")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetOrderStatistics([FromQuery] OrderStatisticsQueryDto dto)
+        {
+            var query = new GetOrderStatisticsQuery(dto);
+            var result = await _sender.Send(query);
+            return result.StatusCode switch
+            {
+                400 => BadRequest(result),
+                404 => NotFound(result),
+                422 => UnprocessableEntity(result),
+                _ => Ok(result)
+            };
+        }
+
     }
 }

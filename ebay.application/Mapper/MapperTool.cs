@@ -11,6 +11,7 @@ public class MapperTool : Profile
         CreateMap<ListingProductDetailEntity, GetListingProductDetailDto>().ReverseMap();
         CreateMap<ProductListCategoryEntity, ProductsByCategoryIdDto>().ReverseMap();
         CreateMap<UserRoleEntity, UserRoleDto>().ReverseMap();
+        CreateMap<OrderStatisticsReadModel, GetOrderStatisticsDto>().ReverseMap();
         CreateMap<UserEntity, UserDto>();
         CreateMap<UserEntity, GetMeDto>();
         CreateMap<CategoryEntity, CategoryDto>();

@@ -111,6 +111,7 @@ builder.Services.AddScoped<IGetOrdersBySellerQuery, GetOrdersBySellerQuery>();
 builder.Services.AddScoped<IListingRepository, ListingRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<IGetOrderStatistics, GetOrderStatistics>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IOptionalCurrentUserService, OptionalCurrentUserService>();
