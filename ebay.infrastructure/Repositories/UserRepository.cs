@@ -48,8 +48,11 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
             PasswordHash = userEntity.PasswordHash,
             FullName = userEntity.FullName,
             CreatedAt = userEntity.CreatedAt,
-            Deleted = userEntity.Deleted
+            Deleted = userEntity.Deleted,
+            Ava = userEntity.Ava,
+
         };
+
 
         foreach (var role in userEntity.UserRoles)
         {
@@ -60,6 +63,7 @@ public class UserRepository(EBayDbContext _context, IMapper _mapper) : IUserRepo
             });
         }
         await _context.Users.AddAsync(user);
+        System.Console.WriteLine(JsonSerializer.Serialize(user.Id));
     }
     #endregion
 

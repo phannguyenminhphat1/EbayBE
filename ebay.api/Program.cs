@@ -115,6 +115,7 @@ builder.Services.AddScoped<IGetOrderStatistics, GetOrderStatistics>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IOptionalCurrentUserService, OptionalCurrentUserService>();
+builder.Services.AddHttpClient<IGoogleOAuthService, GoogleOAuthService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
@@ -141,6 +142,9 @@ app.UseAuthorization();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+app.MapHub<OrderHub>("/hubs/orders");
+app.MapHub<ListingHub>("/hubs/listings");
+
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();

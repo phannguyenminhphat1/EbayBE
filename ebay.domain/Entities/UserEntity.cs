@@ -26,7 +26,7 @@ public class UserEntity
     private readonly List<UserRoleEntity> _userRoles = new();
     public IReadOnlyCollection<UserRoleEntity> UserRoles => _userRoles;
 
-    public UserEntity(string username, string passwordHash, string fullName, string email, DateTime createdAt, bool? deleted)
+    public UserEntity(string username, string passwordHash, string fullName, string email, DateTime createdAt, bool? deleted, string? ava = null)
     {
         Username = username;
         PasswordHash = passwordHash;
@@ -34,6 +34,7 @@ public class UserEntity
         Email = email;
         CreatedAt = createdAt;
         Deleted = deleted;
+        Ava = ava;
     }
     public void AddRole(int roleId)
     {
@@ -61,6 +62,11 @@ public class UserEntity
 
         if (passwordHash != null)
             PasswordHash = passwordHash;
+    }
+
+    public void SetId(int id)
+    {
+        Id = id;
     }
 
 }

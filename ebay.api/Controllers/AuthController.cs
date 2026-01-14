@@ -1,3 +1,5 @@
+using System.Text.Json;
+using ebay.application.Features.Auth;
 using ebay.application.Features.Auth.Commands.Login;
 using ebay.application.Features.Auth.Commands.Logout;
 using ebay.application.Features.Auth.Commands.RefreshToken;
@@ -69,6 +71,26 @@ namespace ebay.api.Controllers
                 _ => Ok(result)
             };
         }
+
+        [HttpGet("oauth/google")]
+        public async Task<IActionResult> OAuthGoogle()
+        {
+            var code = Request.Query["code"].ToString();
+            if (string.IsNullOrEmpty(code))
+                return BadRequest("Missing authorization code");
+            var command = new LoginGoogleOAuthCommand(code);
+            var result = await _sender.Send(command);
+            if (result.StatusCode != 200 || result.Data == null)
+                return Redirect("http://localhost:3001/login?error=oauth_failed");
+            var accessToken = result.Data.AccessToken;
+            var refreshToken = result.Data.RefreshToken;
+            var redirectUrl = $"http://localhost:3001/login" + $"?access_token={Uri.EscapeDataString(accessToken)}" + $"&refresh_token={Uri.EscapeDataString(refreshToken)}";
+
+            return Redirect(redirectUrl);
+
+
+        }
+
 
 
     }
