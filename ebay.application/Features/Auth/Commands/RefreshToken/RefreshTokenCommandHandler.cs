@@ -1,4 +1,5 @@
 using System.Net;
+using System.Security.Claims;
 using AutoMapper;
 using ebay.application.Features.Auth.Commands.RefreshToken;
 using ebay.domain.Entities;
@@ -28,7 +29,16 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, R
     }
     public async Task<ResponseService<TokenResponse<UserDto>>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
-        var userId = _currentUser.UserId;
+        var principal = _jwtService.GetPrincipalFromExpiredToken(request.Dto.AccessToken!);
+        var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+        {
+            return new ResponseService<TokenResponse<UserDto>>(
+                statusCode: 401,
+                message: "Invalid access token"
+            );
+        }
+        var userId = int.Parse(userIdClaim.Value);
         var rfToken = await _refreshTokenRepository.GetByTokenAndUserId(request.Dto.RefreshToken!, userId);
         if (rfToken == null)
         {

@@ -101,8 +101,30 @@ public class JwtService : IJwtService
     #endregion
 
 
-    public bool ValidateToken(string token)
+
+    public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
     {
-        throw new NotImplementedException();
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = true,
+            ValidateIssuer = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key!)),
+            ValidateLifetime = false,
+            ValidIssuer = _issuer,
+            ValidAudience = _audience
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+
+        if (securityToken is not JwtSecurityToken jwtSecurityToken ||
+            !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512, StringComparison.InvariantCultureIgnoreCase))
+        {
+            throw new SecurityTokenException("Invalid token");
+        }
+
+        return principal;
     }
+
 }

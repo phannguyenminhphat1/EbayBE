@@ -142,8 +142,6 @@ app.UseAuthorization();
 
 app.UseSwagger();
 app.UseSwaggerUI();
-app.MapHub<OrderHub>("/hubs/orders");
-app.MapHub<ListingHub>("/hubs/listings");
 
 
 app.UseMiddleware<ErrorHandlingMiddleware>();

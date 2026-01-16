@@ -58,7 +58,6 @@ namespace ebay.api.Controllers
         }
 
         [HttpPost("refresh-token")]
-        [Authorize]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenDto dto)
         {
             var command = new RefreshTokenCommand(dto);
